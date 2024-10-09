@@ -1,0 +1,12 @@
+{
+  "name": "openspace",
+  "version": "1.0.0",
+  "description": "OpenSpace作业集合",
+  "main": "index.js",
+  "scripts": {
+    "pow": "node ./实践POW/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
