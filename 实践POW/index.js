@@ -2,7 +2,7 @@
  * @Author: leelongxi leelongxi@foxmail.com
  * @Date: 2024-10-09 20:31:49
  * @LastEditors: leelongxi leelongxi@foxmail.com
- * @LastEditTime: 2024-10-09 20:56:34
+ * @LastEditTime: 2024-10-09 21:00:23
  * @FilePath: /OpenSpace/实践POW/index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -24,8 +24,8 @@ function pow(data, difficulty) {
 function init(data) {
     const difficultyTo4 = pow(data, 4);
     console.log(difficultyTo4);
-    const difficultyTo6 = pow(data, 5);
-    console.log(difficultyTo6);
+    const difficultyTo5 = pow(data, 5);
+    console.log(difficultyTo5);
 }
 
 init('leelongxi');
