@@ -4,7 +4,8 @@
   "description": "OpenSpace作业集合",
   "main": "index.js",
   "scripts": {
-    "pow": "node ./实践POW/index.js"
+    "pow": "node ./实践POW/index.js",
+    "rsa": "node ./实践POW和RSA/index.js"
   },
   "keywords": [],
   "author": "",
