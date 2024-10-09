@@ -1,0 +1,80 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "data",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "difficulty",
+						"type": "uint256"
+					}
+				],
+				"name": "pow",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "nonce",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "hash",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"实践POW/index.sol": "ProofOfWork"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"实践POW/index.sol": {
+			"keccak256": "0x71330e8f5b73d1a1ebf460c97c0027ff83881a8cbaed24b9e307a3ebd2b178f9",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e05f0a3776e6b4e7c1176ec3253619a2b3eab50c998c0141790ae976e70b00ff",
+				"dweb:/ipfs/QmRLdF4DXZqCQPXT56KE1aQDZaYWssNc48CRXKc2jP8Jqi"
+			]
+		}
+	},
+	"version": 1
+}
