@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: SEE LICENSE IN LICENSE
 pragma solidity ^0.8.26;
 
-contract Bank {
+interface IBank {
+    function desposit() external payable;
+    function withdraw(uint amount) external;
+    function getBalance() external view returns (uint);
+}
+
+contract Bank is IBank {
 
     uint private constant TOP_NUMBERS = 3;
     
@@ -18,10 +24,18 @@ contract Bank {
     }
 
     receive() external payable {
+      _internalDeposit();
+    }
+
+    function _internalDeposit() internal {
         require(msg.value > 0, "Deposit amount must be greater than 0");
         deposits[msg.sender] += msg.value;
         emit Deposit(msg.sender, msg.value);
         updateTopUsers(msg.sender, deposits[msg.sender]);
+    }
+
+    function desposit() external payable override {
+       _internalDeposit();
     }
 
     function updateTopUsers(address user, uint depositAmount) internal {
@@ -52,6 +66,5 @@ contract Bank {
         require(msg.sender == owner, "Only administrators can call");
         _;
     }
-
 
 }
