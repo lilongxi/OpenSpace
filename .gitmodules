@@ -1,3 +1,7 @@
 [submodule "lib/forge-std"]
 	path = lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "lib/OpenSpace"]
+	path = lib/OpenSpace
+	url = https://github.com/lilongxi/OpenSpace
+	branch = challenge-003-2024-10-11
