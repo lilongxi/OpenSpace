@@ -6,3 +6,4 @@ interface IBank {
     function withdraw(uint amount) external;
     function getBalance() external view returns (uint);
 }
+
