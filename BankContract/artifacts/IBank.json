@@ -49,7 +49,7 @@
 		},
 		"gasEstimates": null,
 		"methodIdentifiers": {
-			"desposit()": "b1197bae",
+			"deposit()": "d0e30db0",
 			"getBalance()": "12065fe0",
 			"withdraw(uint256)": "2e1a7d4d"
 		}
@@ -57,7 +57,7 @@
 	"abi": [
 		{
 			"inputs": [],
-			"name": "desposit",
+			"name": "deposit",
 			"outputs": [],
 			"stateMutability": "payable",
 			"type": "function"

@@ -43,6 +43,13 @@
 				"type": "event"
 			},
 			{
+				"inputs": [],
+				"name": "deposit",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -59,13 +66,6 @@
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "desposit",
-				"outputs": [],
-				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
@@ -178,11 +178,11 @@
 	},
 	"sources": {
 		"lib/OpenSpace/BankContract/Bank.sol": {
-			"keccak256": "0x6967af787460053fcc84cd223b766df10d9224a7344672097ff7cabf613e22d2",
+			"keccak256": "0x74abd529140e466507b4d2579b301de3da8471fb98e3a0676c6f31e62c6da82c",
 			"license": "SEE LICENSE IN LICENSE",
 			"urls": [
-				"bzz-raw://32ace70a392ca13f3445782af9ed284c8332ef2a9b427b8737a8613a4d6c49d2",
-				"dweb:/ipfs/QmWaTxsDhT8Zpy5JASz3A2inrLHyMqzWUYtVnFT2YaLhhg"
+				"bzz-raw://f62c1e51a1af301fa2a12932b266c815da4ccf11aa4de688c90611bdd4278977",
+				"dweb:/ipfs/QmPkdXAX9YTDWJeinnFsBEGRoWHxSeyQSMyV6mPrVUnwtf"
 			]
 		}
 	},
