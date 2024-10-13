@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: SEE LICENSE IN LICENSE
 pragma solidity ^0.8.26;
-
 interface IBank {
-    function desposit() external payable;
+    function deposit() external payable;
     function withdraw(uint amount) external;
     function getBalance() external view returns (uint);
 }
@@ -34,7 +33,7 @@ contract Bank is IBank {
         updateTopUsers(msg.sender, deposits[msg.sender]);
     }
 
-    function desposit() external payable override {
+    function deposit() public payable override virtual {
        _internalDeposit();
     }
 
