@@ -7,7 +7,8 @@
     "lib": "lib"
   },
   "scripts": {
-    "bank:publish": "forge script script/BigBank.s.s.sol:CounterScript --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231 --private-key b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840 --chain 1"
+    "bank:publish": "forge script script/BigBank.s.sol:BigBankScript --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231 --private-key b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840",
+    "admin:publish": "forge script script/Admin.s.sol:AdminScript --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231 --private-key b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840"
   },
   "keywords": [],
   "author": "",

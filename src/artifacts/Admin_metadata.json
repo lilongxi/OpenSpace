@@ -1,0 +1,117 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "NoEnoughBalance",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "NotOwner",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "isZeroAddress",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IBank",
+						"name": "bank",
+						"type": "address"
+					}
+				],
+				"name": "adminWithdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"src/Admin.sol": "Admin"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"https://github.com/lilongxi/OpenSpace/blob/challenge-003-2024-10-11/BankContract/Bank.sol": {
+			"keccak256": "0x74abd529140e466507b4d2579b301de3da8471fb98e3a0676c6f31e62c6da82c",
+			"license": "SEE LICENSE IN LICENSE",
+			"urls": [
+				"bzz-raw://f62c1e51a1af301fa2a12932b266c815da4ccf11aa4de688c90611bdd4278977",
+				"dweb:/ipfs/QmPkdXAX9YTDWJeinnFsBEGRoWHxSeyQSMyV6mPrVUnwtf"
+			]
+		},
+		"src/Admin.sol": {
+			"keccak256": "0xed86de41bb110b601fc08a6a87ed510a202de1e6b56eb61a50edb863d53fcec9",
+			"license": "SEE LICENSE IN LICENSE",
+			"urls": [
+				"bzz-raw://d456c43dc16952f907b207e07d6e751141ce78a6661a2b8528f231b2c4ed3678",
+				"dweb:/ipfs/QmVLaGPQEVr9CxUqXxH8fSxt7DRPFQWApwYtVA3B66aTqA"
+			]
+		}
+	},
+	"version": 1
+}

@@ -4,7 +4,7 @@ pragma solidity ^0.8.26;
 import {Script, console} from "forge-std/Script.sol";
 import { Admin } from "../src/Admin.sol";
 
-contract CounterScript is Script {
+contract AdminScript is Script {
     Admin public admin;
 
     function setUp() public {}

@@ -4,7 +4,7 @@ pragma solidity ^0.8.26;
 import {Script, console} from "forge-std/Script.sol";
 import { BigBank } from "../src/BigBank.sol";
 
-contract CounterScript is Script {
+contract BigBankScript is Script {
     BigBank public bigBank;
 
     function setUp() public {}
