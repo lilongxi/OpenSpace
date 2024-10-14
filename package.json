@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "bank:publish": "forge script script/BigBank.s.s.sol:CounterScript --rpc-url https://mainnet.infura.io/v3/ --private-key 0x355eb1c3D6dF0642b3abe2785e821C574837C79f --chain 1"
   },
   "keywords": [],
   "author": "",
