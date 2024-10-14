@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "bank:publish": "forge script script/BigBank.s.s.sol:CounterScript --rpc-url https://mainnet.infura.io/v3/ --private-key 0x355eb1c3D6dF0642b3abe2785e821C574837C79f --chain 1"
+    "bank:publish": "forge script script/BigBank.s.s.sol:CounterScript --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231 --private-key b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840 --chain 1"
   },
   "keywords": [],
   "author": "",
