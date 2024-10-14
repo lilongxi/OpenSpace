@@ -14,6 +14,10 @@ contract Admin {
         owner = msg.sender;
     }
 
+    receive () external payable {
+        
+    }
+
     function adminWithdraw(IBank bank) external onlyOwner {
         uint balance = address(bank).balance;
         if (balance <= 0) revert NoEnoughBalance();
