@@ -22,6 +22,7 @@ contract BaseERC20 is Context, IERC20Errors {
         name = "BaseERC20";
         symbol = "BERC20";
         decimals = 18;
+        // 提供初始化代币
         totalSupply =  100_000_000 * 10 ** decimals;
         balances[msg.sender] = totalSupply;  
     }
