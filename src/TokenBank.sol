@@ -2,8 +2,9 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/Context.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+// import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/interfaces/draft-IERC6093.sol";
+import "./BaseERC20.sol";
 
 interface ITokenBank {
     function deposit(uint256 amount) external;
@@ -14,7 +15,7 @@ interface ITokenBank {
 contract TokenBank is ITokenBank, Context, IERC20Errors {
     mapping (address => uint256) private balances;
 
-    IERC20 private token;
+    BaseERC20 private token;
 
     error NoEnoughBalance();
 
@@ -29,7 +30,7 @@ contract TokenBank is ITokenBank, Context, IERC20Errors {
     }
 
     constructor(address tokenAddr) ERC20Invalid(tokenAddr) {
-        token = IERC20(tokenAddr);
+        token = BaseERC20(tokenAddr);
     }
 
     function deposit (uint256 amount) public DespositInvalid(amount) {
