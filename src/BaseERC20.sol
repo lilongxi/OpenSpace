@@ -5,11 +5,11 @@ import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/interfaces/draft-IERC6093.sol";
 
 contract BaseERC20 is Context, IERC20Errors {
-    string public name; 
-    string public symbol; 
-    uint8 public decimals; 
 
-    uint256 public totalSupply; 
+    string private name; 
+    string private symbol; 
+    uint256 private totalSupply;
+    uint8 public decimals = 18; 
 
     mapping (address => uint256) balances; 
 
@@ -18,13 +18,18 @@ contract BaseERC20 is Context, IERC20Errors {
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(address indexed owner, address indexed spender, uint256 value);
 
-    constructor() {
-        name = "BaseERC20";
-        symbol = "BERC20";
-        decimals = 18;
+    constructor(string memory name_, string memory symbol_) {
+        name = name_;
+        symbol = symbol_;
+    }
+
+    function _mint(address account, uint value) internal ERC20Invalid(account)  {
         // 提供初始化代币
-        totalSupply =  100_000_000 * 10 ** decimals;
-        balances[msg.sender] = totalSupply;  
+        // totalSupply =  100_000_000 * 10 ** decimals;
+        totalSupply = value;
+        unchecked {
+            balances[msg.sender] = totalSupply;
+        }
     }
 
     modifier ERC20Invalid(address _address) {
