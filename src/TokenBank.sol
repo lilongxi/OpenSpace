@@ -56,5 +56,14 @@ contract TokenBank is ITokenBank, Context, IERC20Errors {
         return balances[owner];
     }
 
+    function testRevert(uint amount) public pure {
+        if(amount < 250)  revert ERC20InsufficientBalance(address(0), 250, 250);
+    }
+
+    function testRevertRequire(uint amount) public pure {
+        // if(amount < 250)  revert ERC20InsufficientBalance(address(0), 250, 250);
+        require(amount >= 250, "fuck ERC20InsufficientBalance");
+    }
 
 }
+

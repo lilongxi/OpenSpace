@@ -8,9 +8,9 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "initialSupply",
-						"type": "uint256"
+						"internalType": "address",
+						"name": "tokenAddr",
+						"type": "address"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -103,130 +103,31 @@
 				"type": "error"
 			},
 			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
-					},
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "spender",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "value",
-						"type": "uint256"
-					}
-				],
-				"name": "Approval",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "from",
-						"type": "address"
-					},
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "value",
-						"type": "uint256"
-					}
-				],
-				"name": "Transfer",
-				"type": "event"
+				"inputs": [],
+				"name": "NoEnoughBalance",
+				"type": "error"
 			},
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "_owner",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "_spender",
-						"type": "address"
-					}
-				],
-				"name": "allowance",
-				"outputs": [
-					{
 						"internalType": "uint256",
-						"name": "remaining",
+						"name": "amount",
 						"type": "uint256"
 					}
 				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "_spender",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_value",
-						"type": "uint256"
-					}
-				],
-				"name": "approve",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "success",
-						"type": "bool"
-					}
-				],
+				"name": "deposit",
+				"outputs": [],
 				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "_owner",
-						"type": "address"
-					}
-				],
-				"name": "balanceOf",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "balance",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "decimals",
+				"name": "getBalance",
 				"outputs": [
 					{
-						"internalType": "uint8",
+						"internalType": "uint256",
 						"name": "",
-						"type": "uint8"
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -235,53 +136,39 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "_to",
-						"type": "address"
-					},
-					{
 						"internalType": "uint256",
-						"name": "_value",
+						"name": "amount",
 						"type": "uint256"
 					}
 				],
-				"name": "transfer",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "success",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "nonpayable",
+				"name": "testRevert",
+				"outputs": [],
+				"stateMutability": "pure",
 				"type": "function"
 			},
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "_from",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "_to",
-						"type": "address"
-					},
-					{
 						"internalType": "uint256",
-						"name": "_value",
+						"name": "amount",
 						"type": "uint256"
 					}
 				],
-				"name": "transferFrom",
-				"outputs": [
+				"name": "testRevertRequire",
+				"outputs": [],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
 					{
-						"internalType": "bool",
-						"name": "success",
-						"type": "bool"
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
 					}
 				],
+				"name": "withdraw",
+				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			}
@@ -353,7 +240,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"src/MyToken.sol": "HHMyToken"
+			"src/TokenBank.sol": "TokenBank"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},
@@ -391,12 +278,12 @@
 				"dweb:/ipfs/QmZpBWMZonLv6EDwaSDzUWpLcuuK3nGLJtyXc1r4VZoUJ1"
 			]
 		},
-		"src/MyToken.sol": {
-			"keccak256": "0x5814ed91c2c23a8d2e96e411b6ca4d67648c413adff6862192f96481b52b5448",
+		"src/TokenBank.sol": {
+			"keccak256": "0x74b7acb7622833992b1011a3de1df0a1b66f11b48388939ad257e3881d3270eb",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6da7c414e5bba3a221e183ee7488e19f023bbd343c49adbbf2c9ef04cb441cdc",
-				"dweb:/ipfs/QmakRpYcmSNe6yaKwShnYh47Sm1pobuY3SF5aRUWWjB35h"
+				"bzz-raw://67b0f22bf9c771ae3865d7b36be2fc1a990eea50b4f7f4c001b8e8349ade100c",
+				"dweb:/ipfs/QmY8CNJtmacDxN4FEfP267Nxw7Xz1KmB5hHbohaVc39upB"
 			]
 		}
 	},

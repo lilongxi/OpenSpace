@@ -55,19 +55,6 @@ contract BaseERC20 is Context, IERC20Errors {
         allowances[owner][spender] = value;
     }
 
-    function _spendAllowance(address owner, address spender, uint256 value) internal virtual {
-        uint256 currentAllowance = allowance(owner, spender);
-        // 不可以是无上限授权
-        if (currentAllowance != type(uint256).max) {
-            if (currentAllowance < value) {
-                revert ERC20InsufficientAllowance(spender, currentAllowance, value);
-            }
-            unchecked {
-                _approve(owner, spender, currentAllowance - value);
-            }
-        }
-    }
-
     function balanceOf(address _owner) public view returns (uint256 balance) {
         return balances[_owner];
     }
@@ -83,11 +70,27 @@ contract BaseERC20 is Context, IERC20Errors {
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
         address spender = _msgSender();
         // 减掉被授权账户的可用额度
+        // _from -> user msg.sender
+        // spender -> bank address
         _spendAllowance(_from, spender, _value);
         // 从当前账户转出
         _transfer(_from, _to, _value);
         emit Transfer(_from, _to, _value);
         return true; 
+    }
+
+        function _spendAllowance(address owner, address spender, uint256 value) internal virtual {
+        uint256 currentAllowance = allowance(owner, spender);
+        // 不可以是无上限授权
+        if (currentAllowance != type(uint256).max) {
+            // 减掉可转移的额度
+            if (currentAllowance < value) {
+                revert ERC20InsufficientAllowance(spender, currentAllowance, value);
+            }
+            unchecked {
+                _approve(owner, spender, currentAllowance - value);
+            }
+        }
     }
 
     function approve(address _spender, uint256 _value) public returns (bool success) {
