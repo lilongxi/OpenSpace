@@ -4,3 +4,6 @@
 [submodule "lib/OpenSpace"]
 	path = lib/OpenSpace
 	url = https://github.com/lilongxi/OpenSpace
+[submodule "lib/openzeppelin-contracts"]
+	path = lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
