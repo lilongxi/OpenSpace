@@ -1,2 +1,2 @@
-oz_v5/=lib/openzeppelin-contracts-v5.0.2/
+oz_v5/=lib/openzeppelin-contracts/
 oz_v4_9/=lib/openzeppelin-contracts-v4.9.6/
