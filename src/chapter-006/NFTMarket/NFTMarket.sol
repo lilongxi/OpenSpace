@@ -28,7 +28,6 @@ buyNFT() : 普通的购买 NFT 功能，用户转入所定价的 token 数量，
 // 
 contract NFTMarket is IERC721Receiver, Ownable, IERC20WithCallback {
 
-    address public admin;
     ERC20WithCallback public tkContact;
     BaseERC721 public nftContract;
 
@@ -45,7 +44,6 @@ contract NFTMarket is IERC721Receiver, Ownable, IERC20WithCallback {
     event NFTPurchased(uint256 indexed tokenId, uint256 price, address indexed buyer);
     
     constructor(address _nftAddr, address _tokenAddr) Ownable(_msgSender()) {
-        admin = _msgSender();
         nftContract = BaseERC721(_nftAddr);
         tkContact = ERC20WithCallback(_tokenAddr);
     }
