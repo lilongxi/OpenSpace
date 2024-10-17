@@ -2,7 +2,7 @@
  * @Author: leelongxi leelongxi@foxmail.com
  * @Date: 2024-10-16 09:36:16
  * @LastEditors: leelongxi leelongxi@foxmail.com
- * @LastEditTime: 2024-10-16 11:21:42
+ * @LastEditTime: 2024-10-17 09:39:20
  * @FilePath: /OpenSpace/src/chapter-006/readme.md
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -19,3 +19,10 @@
 4. 全局注册合约表（ERC1820）注册回调监听
 
 # ERC1363
+
+
+# 作业链接
+1. https://decert.me/challenge/65e9c4a1-a2ee-41ea-b8d7-7a5a1a945cbc
+2. https://decert.me/challenge/852f5836-a03d-4483-a7e0-b0f6f8bda01c
+3. https://decert.me/challenge/abdbc346-8314-4394-8f97-8732780602ed
+4. https://decert.me/quests/4df553df-fbab-49c8-a05f-83256432c6af
