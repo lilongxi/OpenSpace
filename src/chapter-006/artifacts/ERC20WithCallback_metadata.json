@@ -8,9 +8,14 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "initialSupply",
-						"type": "uint256"
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "symbol",
+						"type": "string"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -420,7 +425,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"src/chapter-006/MyTokenCallback.sol": "MyTokenCallback"
+			"src/chapter-006/ERC20WithCallback.sol": "ERC20WithCallback"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},
@@ -475,14 +480,6 @@
 			"urls": [
 				"bzz-raw://193331d5e54458d8b58b5aae81538a5b5887290beb158bf8f6d1eb9b53b9b9a5",
 				"dweb:/ipfs/QmbWaduwDZcd2yq3k7dNbxNd5e525bfkYHQiSzC6vktHb3"
-			]
-		},
-		"src/chapter-006/MyTokenCallback.sol": {
-			"keccak256": "0x92c236592559d9fda6e6ef031072e5c7ae1d50a72aa4ced479f8b9988c90f9c6",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://2fe3d0cd4a920038d9ca5a9481403117c232cdab27e0d2277d2b65c3dbeedd21",
-				"dweb:/ipfs/QmTCyWtuCUqbKkBW1xHKeweMPSuSdiRXVCfDcXgDbMuHE1"
 			]
 		}
 	},

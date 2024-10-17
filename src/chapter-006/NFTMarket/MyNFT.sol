@@ -1,8 +1,3 @@
-// https://learnblockchain.cn/article/8667
-// https://app.pinata.cloud/
-// 0x6cb4512ea31cd0728ed7aafdca4ee18a2182ceff
-// https://testnets.opensea.io/assets/sepolia/0x6cb4512ea31cd0728ed7aafdca4ee18a2182ceff/0
-
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 

@@ -34,7 +34,7 @@ contract TokenBank is ITokenBank, Context, IERC20Errors {
         token = BaseERC20(tokenAddr);
     }
 
-    function deposit (uint256 amount) public DespositInvalid(amount) {
+    function deposit (uint256 amount) public virtual DespositInvalid(amount) {
         address owner = _msgSender();
         bool isValid = token.transferFrom(owner, address(this), amount);
         require(isValid, "TransferFrom Failed");

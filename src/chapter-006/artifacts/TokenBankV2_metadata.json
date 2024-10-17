@@ -8,8 +8,8 @@
 			{
 				"inputs": [
 					{
-						"internalType": "contract ERC20WithCallback",
-						"name": "tokenAddr",
+						"internalType": "address",
+						"name": "_addr",
 						"type": "address"
 					}
 				],
@@ -17,42 +17,95 @@
 				"type": "constructor"
 			},
 			{
-				"anonymous": false,
 				"inputs": [
 					{
-						"indexed": true,
 						"internalType": "address",
-						"name": "from",
+						"name": "spender",
 						"type": "address"
 					},
 					{
-						"indexed": false,
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "allowance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "needed",
 						"type": "uint256"
 					}
 				],
-				"name": "Deposit",
-				"type": "event"
+				"name": "ERC20InsufficientAllowance",
+				"type": "error"
 			},
 			{
-				"anonymous": false,
 				"inputs": [
 					{
-						"indexed": true,
 						"internalType": "address",
-						"name": "previousOwner",
+						"name": "sender",
 						"type": "address"
 					},
 					{
-						"indexed": true,
+						"internalType": "uint256",
+						"name": "balance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "needed",
+						"type": "uint256"
+					}
+				],
+				"name": "ERC20InsufficientBalance",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "address",
-						"name": "newOwner",
+						"name": "approver",
 						"type": "address"
 					}
 				],
-				"name": "OwnershipTransferred",
-				"type": "event"
+				"name": "ERC20InvalidApprover",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					}
+				],
+				"name": "ERC20InvalidReceiver",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "ERC20InvalidSender",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					}
+				],
+				"name": "ERC20InvalidSpender",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "NoEnoughBalance",
+				"type": "error"
 			},
 			{
 				"inputs": [
@@ -76,11 +129,18 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "user",
-						"type": "address"
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
 					}
 				],
+				"name": "deposit",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "getBalance",
 				"outputs": [
 					{
@@ -93,23 +153,29 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "owner",
-				"outputs": [
+				"inputs": [
 					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
 					}
 				],
-				"stateMutability": "view",
+				"name": "testRevert",
+				"outputs": [],
+				"stateMutability": "pure",
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "renounceOwnership",
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "testRevertRequire",
 				"outputs": [],
-				"stateMutability": "nonpayable",
+				"stateMutability": "pure",
 				"type": "function"
 			},
 			{
@@ -117,7 +183,7 @@
 				"name": "token",
 				"outputs": [
 					{
-						"internalType": "contract ERC20WithCallback",
+						"internalType": "contract BaseERC20",
 						"name": "",
 						"type": "address"
 					}
@@ -129,35 +195,23 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "from",
+						"name": "account",
 						"type": "address"
 					},
 					{
 						"internalType": "uint256",
 						"name": "amount",
 						"type": "uint256"
-					},
-					{
-						"internalType": "bytes",
-						"name": "data",
-						"type": "bytes"
 					}
 				],
 				"name": "tokensReceived",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
+				"outputs": [
 					{
-						"internalType": "address",
-						"name": "newOwner",
-						"type": "address"
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
 					}
 				],
-				"name": "transferOwnership",
-				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
@@ -176,18 +230,62 @@
 			}
 		],
 		"devdoc": {
-			"kind": "dev",
-			"methods": {
-				"owner()": {
-					"details": "Returns the address of the current owner."
-				},
-				"renounceOwnership()": {
-					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
-				},
-				"transferOwnership(address)": {
-					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
-				}
+			"errors": {
+				"ERC20InsufficientAllowance(address,uint256,uint256)": [
+					{
+						"details": "Indicates a failure with the `spender`’s `allowance`. Used in transfers.",
+						"params": {
+							"allowance": "Amount of tokens a `spender` is allowed to operate with.",
+							"needed": "Minimum amount required to perform a transfer.",
+							"spender": "Address that may be allowed to operate on tokens without being their owner."
+						}
+					}
+				],
+				"ERC20InsufficientBalance(address,uint256,uint256)": [
+					{
+						"details": "Indicates an error related to the current `balance` of a `sender`. Used in transfers.",
+						"params": {
+							"balance": "Current balance for the interacting account.",
+							"needed": "Minimum amount required to perform a transfer.",
+							"sender": "Address whose tokens are being transferred."
+						}
+					}
+				],
+				"ERC20InvalidApprover(address)": [
+					{
+						"details": "Indicates a failure with the `approver` of a token to be approved. Used in approvals.",
+						"params": {
+							"approver": "Address initiating an approval operation."
+						}
+					}
+				],
+				"ERC20InvalidReceiver(address)": [
+					{
+						"details": "Indicates a failure with the token `receiver`. Used in transfers.",
+						"params": {
+							"receiver": "Address to which tokens are being transferred."
+						}
+					}
+				],
+				"ERC20InvalidSender(address)": [
+					{
+						"details": "Indicates a failure with the token `sender`. Used in transfers.",
+						"params": {
+							"sender": "Address whose tokens are being transferred."
+						}
+					}
+				],
+				"ERC20InvalidSpender(address)": [
+					{
+						"details": "Indicates a failure with the `spender` to be approved. Used in approvals.",
+						"params": {
+							"spender": "Address that may be allowed to operate on tokens without being their owner."
+						}
+					}
+				]
 			},
+			"kind": "dev",
+			"methods": {},
 			"version": 1
 		},
 		"userdoc": {
@@ -215,22 +313,6 @@
 		]
 	},
 	"sources": {
-		"@openzeppelin/contracts/interfaces/draft-IERC6093.sol": {
-			"keccak256": "0x60c65f701957fdd6faea1acb0bb45825791d473693ed9ecb34726fdfaa849dd7",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://ea290300e0efc4d901244949dc4d877fd46e6c5e43dc2b26620e8efab3ab803f",
-				"dweb:/ipfs/QmcLLJppxKeJWqHxE2CUkcfhuRTgHSn8J4kijcLa5MYhSt"
-			]
-		},
-		"lib/openzeppelin-contracts-v4.9.6/contracts/access/Ownable.sol": {
-			"keccak256": "0xba43b97fba0d32eb4254f6a5a297b39a19a247082a02d6e69349e071e2946218",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://fc980984badf3984b6303b377711220e067722bbd6a135b24669ff5069ef9f32",
-				"dweb:/ipfs/QmPHXMSXj99XjSVM21YsY6aNtLLjLVXDbyN76J5HQYvvrz"
-			]
-		},
 		"lib/openzeppelin-contracts-v4.9.6/contracts/utils/Address.sol": {
 			"keccak256": "0x006dd67219697fe68d7fbfdea512e7c4cb64a43565ed86171d67e844982da6fa",
 			"license": "MIT",
@@ -239,36 +321,60 @@
 				"dweb:/ipfs/QmfYjnjRbWqYpuxurqveE6HtzsY1Xx323J428AKQgtBJZm"
 			]
 		},
-		"lib/openzeppelin-contracts-v4.9.6/contracts/utils/Context.sol": {
-			"keccak256": "0xa92e4fa126feb6907daa0513ddd816b2eb91f30a808de54f63c17d0e162c3439",
+		"lib/openzeppelin-contracts/contracts/access/Ownable.sol": {
+			"keccak256": "0xff6d0bb2e285473e5311d9d3caacb525ae3538a80758c10649a4d61029b017bb",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a367861093b74443b137564d3f3c472f70bcf114739e62059c939f25e315706c",
-				"dweb:/ipfs/Qmd7JMpcxD9RuQjK3uM3EzJUgSqdN8vzp8eytEiuwxQJ6h"
+				"bzz-raw://8ed324d3920bb545059d66ab97d43e43ee85fd3bd52e03e401f020afb0b120f6",
+				"dweb:/ipfs/QmfEckWLmZkDDcoWrkEvMWhms66xwTLff9DDhegYpvHo1a"
+			]
+		},
+		"lib/openzeppelin-contracts/contracts/interfaces/draft-IERC6093.sol": {
+			"keccak256": "0x60c65f701957fdd6faea1acb0bb45825791d473693ed9ecb34726fdfaa849dd7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ea290300e0efc4d901244949dc4d877fd46e6c5e43dc2b26620e8efab3ab803f",
+				"dweb:/ipfs/QmcLLJppxKeJWqHxE2CUkcfhuRTgHSn8J4kijcLa5MYhSt"
+			]
+		},
+		"lib/openzeppelin-contracts/contracts/utils/Context.sol": {
+			"keccak256": "0x493033a8d1b176a037b2cc6a04dad01a5c157722049bbecf632ca876224dd4b2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6a708e8a5bdb1011c2c381c9a5cfd8a9a956d7d0a9dc1bd8bcdaf52f76ef2f12",
+				"dweb:/ipfs/Qmax9WHBnVsZP46ZxEMNRQpLQnrdE4dK8LehML1Py8FowF"
 			]
 		},
 		"src/BaseERC20.sol": {
-			"keccak256": "0xf936f128d5076dfdd46199b5fada3c6859c017af34469ee1feb5ab1413389701",
+			"keccak256": "0x0051b698fb03cb6970933f8858106e8c2ece418cebc16a4bda837949f857b821",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://745932b0e9bb6cae6c7b17ca96260c018c6a8f5547a0a3c3ac4396f2fd16f563",
-				"dweb:/ipfs/QmSaj8EjgQJPd74ogBKz6GjUCZx8R9zzGbfCSufHBRcBCT"
+				"bzz-raw://7cf1e88fc0bc98fee6c243d29bb2b2ed2b2a62624b85e302bab94648ad88b190",
+				"dweb:/ipfs/QmNryiWDr2eo8yLNZYZfMYs9oZ8xJhXoK4WPTiMJbUeRsj"
+			]
+		},
+		"src/TokenBank.sol": {
+			"keccak256": "0xfa49b1a256cf5178e7cf8a78729460852a1f04563c33e6721a9eb890b61d9917",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8545acce02b46ae0b8cc3badd69d41a2e0a0bc7a25204967886c1d837bb3a1ea",
+				"dweb:/ipfs/QmUzUP4bY73uUp6w7NPJPZZ4AofAZp23n2NunbrE4sXzde"
 			]
 		},
 		"src/chapter-006/ERC20WithCallback.sol": {
-			"keccak256": "0xf898478c61dd8b80aab0a519b8badfbe7b709bef53f98cc4c5965d7aecf4c66b",
+			"keccak256": "0x5cbd367b6879c63ef0b1015ad0918eab02227bab4b7fcb25836cb05e442cf6d4",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b8bc636aa1c663173c3b088d7c6cfd4afda166d5cb8862657c40dbe7f23da7f4",
-				"dweb:/ipfs/QmZbVgBBXBWLLH2g3g6th5SykHkHtshxkV9eqec18bbvud"
+				"bzz-raw://193331d5e54458d8b58b5aae81538a5b5887290beb158bf8f6d1eb9b53b9b9a5",
+				"dweb:/ipfs/QmbWaduwDZcd2yq3k7dNbxNd5e525bfkYHQiSzC6vktHb3"
 			]
 		},
 		"src/chapter-006/TokenBankV2.sol": {
-			"keccak256": "0x71780201ead80c6fa1260605fcb6c44d87e00512200d1a93e28c24a49409fa0d",
+			"keccak256": "0x8e9dcd12d814bfa3f5f9f38af211c8d55763912bf7d47905753f9248349ca81e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://95783a23922835798cc1a7890b1ff8e5413fa0af7c4559a74ada6fbb3e30c268",
-				"dweb:/ipfs/QmXSjkgMiCkvsLCEbR5S23A1XBPFuuxnzLCAfYLesgYG5Z"
+				"bzz-raw://95154c6fe8f61f813b329e3192690fbee41707ad0679fcab4ee844b1842a5e4c",
+				"dweb:/ipfs/QmcJk8RHCP67JdKaDaQ3fhwZxHjHFQsLExk6VY2WqMuSz9"
 			]
 		}
 	},
