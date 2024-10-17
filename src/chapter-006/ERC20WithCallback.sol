@@ -37,4 +37,16 @@ contract ERC20WithCallback is BaseERC20 {
         return true;
     }
 
+    function transferWithCallbackV2(address to, uint amount) external ERC20Invalid(to) returns (bool) {
+        address owner = _msgSender();
+        _transfer(owner, to, amount);
+        if (Address.isContract(to)) {
+             (bool success,) = to.call(
+                abi.encodeWithSignature("tokensReceived(address,uint256)", owner, amount)
+            );
+            require(success, "tokensReceived call failed");
+        }
+        return true;
+    }
+
 }
