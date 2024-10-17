@@ -4,10 +4,10 @@ pragma solidity ^0.8.0;
 // https://decert.me/challenge/852f5836-a03d-4483-a7e0-b0f6f8bda01c
 
 
-import "oz_v4_9/contracts/utils/Address.sol";
-import "oz_v4_9/contracts/utils/Context.sol";
-import "oz_v4_9/contracts/utils/Strings.sol";
-import "oz_v4_9/contracts/token/ERC721/IERC721Receiver.sol";
+import "./isContract.sol";
+import "oz_v5/contracts/utils/Context.sol";
+import "oz_v5/contracts/utils/Strings.sol";
+import "oz_v5/contracts/token/ERC721/IERC721Receiver.sol";
 
 contract BaseERC721 {
     using Strings for uint256;

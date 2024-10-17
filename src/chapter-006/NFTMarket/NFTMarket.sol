@@ -2,9 +2,13 @@
 pragma solidity ^0.8.0;
 
 import "oz_v5/contracts/utils/Context.sol";
-import "oz_v5/contracts/token/ERC721/ERC721.sol";
+import "oz_v5/contracts/access/Ownable.sol";
 import "oz_v5/contracts/token/ERC721/IERC721Receiver.sol";
-import "oz_v5/contracts/token/ERC20/ERC20.sol";
+// import "oz_v5/contracts/token/ERC721/ERC721.sol";
+import "../ERC20WithCallback.sol";
+import "../MyERC721.sol";
+
+// import "oz_v5/contracts/token/ERC20/ERC20.sol";
 
 /**
  * @title 
@@ -22,38 +26,73 @@ buyNFT() : 普通的购买 NFT 功能，用户转入所定价的 token 数量，
 
 // 继承 IERC721Receiver 实现 onERC721Received 表明可处理 NFT 防止锁死
 // 
-contract NFTMarket is IERC721Receiver {
+contract NFTMarket is IERC721Receiver, Ownable, IERC20WithCallback {
 
     address public admin;
-    IERC20 public tkContact;
-    IERC721 public nftContract;
+    ERC20WithCallback public tkContact;
+    BaseERC721 public nftContract;
 
-    struct  MarketItem {
+    struct Listing {
         uint tokenId;
-        uint price;
         address seller;
+        uint price;
         bool isSold;
     }
 
-    MarketItem[] public marketItems;
-
-    event MarketItemListed( address indexed seller,  
-        uint256 indexed tokenId,  
-        uint256 price,  
-        address nftAddress );
+    mapping (uint => Listing) public listings;
     
-    event MarketItemPurchased(  
-        address buyer,  
-        address seller,  
-        uint256 tokenId,  
-        uint256 price,  
-        address nftAddress  
-    );  
+    event NFTListed(uint256 indexed tokenId, uint256 price, address indexed seller);
+    event NFTPurchased(uint256 indexed tokenId, uint256 price, address indexed buyer);
+    
+    constructor(address _nftAddr, address _tokenAddr) Ownable(_msgSender()) {
+        admin = _msgSender();
+        nftContract = BaseERC721(_nftAddr);
+        tkContact = ERC20WithCallback(_tokenAddr);
+    }
 
-    constructor(address _nftAddr, address _tokenAddr) {
-        admin = msg.sender;
-        nftContract = IERC721(_nftAddr);
-        tkContact = IERC20(_tokenAddr);
+    // NFT持有者上架NFT，设置价格
+    function list(uint tokenId, uint price) external {
+        address owner = _msgSender();
+        require(nftContract.ownerOf(tokenId) == owner, "You are not the owner of this NFT");
+        require(price > 0, "Price must be greater than zero");
+        
+        nftContract.transferFrom(owner, address(this), tokenId);
+        listings[tokenId] = Listing(tokenId, _msgSender(), price, true);
+        
+         emit NFTListed(tokenId, price, owner); 
+    }
+
+    function tokensReceived(address from, uint256 amount, bytes calldata data) external returns (bool) {
+        require(_msgSender() == address(tkContact), "Invalid sender");
+        uint256 tokenId = abi.decode(data, (uint256));
+        Listing memory listing = listings[tokenId];
+        require(listing.price > 0, "This NFT is not for sale.");
+        require(amount >= listing.price, "Insufficient token amount sent.");
+        require(tkContact.transferFrom(from, listing.seller, listing.price), "Token transfer failed.");
+
+        nftContract.safeTransferFrom(listing.seller, from, tokenId);
+
+        listing.isSold = false;
+        listings[tokenId] = listing;
+
+        emit NFTPurchased(tokenId, listing.price, from);
+
+        return true;
+    }
+
+    function buyNFT (uint tokenId) external {
+        Listing memory listing = listings[tokenId];
+        address owner = _msgSender();
+        require(listing.price > 0, "This NFT is not for sale.");
+        require(tkContact.balanceOf(owner) >= listing.price, "Insufficient token balance.");
+        require(tkContact.allowance(owner, address(this)) >= listing.price, "Insufficient allowance.");
+        require(tkContact.transferFrom(owner, listing.seller, listing.price), "Token transfer failed.");
+        nftContract.safeTransferFrom(listing.seller, owner, tokenId);
+        
+        listing.isSold = false;
+        listings[tokenId] = listing;
+
+        emit NFTPurchased(tokenId, listing.price, owner);
     }
 
     //  要求实现避免锁死
