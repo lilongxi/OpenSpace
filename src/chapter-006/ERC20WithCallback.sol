@@ -44,7 +44,7 @@ contract ERC20WithCallback is BaseERC20 {
              (bool success,) = to.call(
                 abi.encodeWithSignature("tokensReceived(address,uint256)", owner, amount)
             );
-            require(success, "tokensReceived call failed");
+            require(success, "ERC20WithCallback: tokensReceived failed");
         }
         return true;
     }
