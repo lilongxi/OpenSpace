@@ -50,4 +50,5 @@ contract FristBankTest is Test {
         
         bank.depositETH{value: 0}();
     }
+
 }

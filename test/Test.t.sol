@@ -83,4 +83,30 @@ contract TestContract is Test {
         assertEq(erc20.balanceOf(bob), 3000);
 
     }
+
+    function testRevertError() public {
+        address addr = address(0x7fc93b5620662f523AE2387aE38A444baaE68f88);
+        OwnerUpOnly n1 = new OwnerUpOnly();
+        vm.prank(addr);
+        // vm.expectRevert(OwnerUpOnly.Unauthorized.selector);
+        // vm.expectRevert(abi.encodeWithSignature('Unauthorized()'));
+        vm.expectRevert(abi.encodeWithSelector(OwnerUpOnly.Unauthorized.selector));
+        n1.incrementV2();
+    }
+
+    event Deposit(address indexed user, uint amount);
+
+    // function testERC20EmitBatchTransfer() public {
+    //     for (uint i = 0; i < 10; i++) {
+    //         /**
+    //          * topic0 address(this) always check
+    //          * 检查 topic1
+    //          * 检查 topic2
+    //          * 不检查 topic3
+    //          * 检查剩余所有参数
+    //          */
+    //         vm.expectEmit(true, true, false, true);
+    //         emit Deposit(address(0x7fc93b5620662f523AE2387aE38A444baaE68f88), i); 
+    //     }
+    // }
 }

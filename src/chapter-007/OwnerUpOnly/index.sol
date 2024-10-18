@@ -9,12 +9,21 @@ contract OwnerUpOnly {
      address public immutable owner;
      uint public counter;
 
+     error Unauthorized();
+
     constructor() {
         owner = msg.sender;
     }
 
     function increment() external {
         require(msg.sender == owner, 'fk');
+        counter++;
+    }
+
+     function incrementV2() external {
+        if (msg.sender != owner) {
+            revert Unauthorized();
+        }
         counter++;
     }
 
