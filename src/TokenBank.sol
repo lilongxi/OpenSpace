@@ -12,8 +12,7 @@ interface ITokenBank {
     function withdraw(uint amount) external;
     function getBalance() external view returns (uint);
 }
-
-contract TokenBank is ITokenBank, Context, IERC20Errors {
+ contract TokenBank is ITokenBank, Context, IERC20Errors {
     mapping (address => uint256) public balances;
 
     BaseERC20 public token;

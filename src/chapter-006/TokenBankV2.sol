@@ -5,7 +5,7 @@ pragma solidity ^0.8.0;
 import "../TokenBank.sol";
 import "./ERC20WithCallback.sol";
 
-contract TokenBankV2 is TokenBank, IERC20WithCallback {
+abstract contract TokenBankV2 is TokenBank, IERC20WithCallback {
     constructor(address _addr) TokenBank(_addr) {}
     
     /**
