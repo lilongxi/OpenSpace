@@ -25,10 +25,11 @@ contract FristBankTest is Test {
     vm.expectEmit(true, true, false, true);
     emit Deposit(user, initialDeposit);
 
+
       // 检查存款前余额
     assertEq(bank.balanceOf(user), 0, "Initial balance should be zero");
 
-    // 模拟用户地址调用
+      // 模拟用户地址调用
     vm.prank(user);
 
      // 执行存款逻辑
