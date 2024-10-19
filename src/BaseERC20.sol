@@ -8,7 +8,7 @@ contract BaseERC20 is Context, IERC20Errors {
 
     string private name; 
     string private symbol; 
-    uint256 private totalSupply;
+    uint256 public totalSupply;
     uint8 public decimals = 18; 
 
     mapping (address => uint256) balances; 
@@ -66,6 +66,15 @@ contract BaseERC20 is Context, IERC20Errors {
         return true;   
     }
 
+    function _burn(address account, uint value) internal {
+        if (account == address(0)) {
+            revert ERC20InvalidSender(address(0));
+        }
+        unchecked {
+            totalSupply -= value;
+        }
+    }
+
     // 代理转账：允许被授权的地址从一个账户向另一个账户转移代币
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
         address spender = _msgSender();
@@ -79,7 +88,7 @@ contract BaseERC20 is Context, IERC20Errors {
         return true; 
     }
 
-        function _spendAllowance(address owner, address spender, uint256 value) internal virtual {
+    function _spendAllowance(address owner, address spender, uint256 value) internal virtual {
         uint256 currentAllowance = allowance(owner, spender);
         // 不可以是无上限授权
         if (currentAllowance != type(uint256).max) {

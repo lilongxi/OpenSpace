@@ -27,4 +27,8 @@ contract OwnerUpOnly {
         counter++;
     }
 
+    function setNumber(uint x) public {
+        counter = x;
+    }
+
 }

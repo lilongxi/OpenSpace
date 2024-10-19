@@ -7,6 +7,12 @@ import { OwnerUpOnly } from "src/chapter-007/OwnerUpOnly/index.sol";
 
 contract TestContract is Test {
 
+    // WETH public weth;
+
+    // function setUp() public {
+    //     weth = new WETH();
+    // }
+
     function testRoll() public {
         console.log("New Block Number1:", block.number);
         uint newBlockNumber = 100;
@@ -94,19 +100,50 @@ contract TestContract is Test {
         n1.incrementV2();
     }
 
-    event Deposit(address indexed user, uint amount);
+    event Deposit(address indexed user,address indexed token, uint amount, string v);
 
-    // function testERC20EmitBatchTransfer() public {
-    //     for (uint i = 0; i < 10; i++) {
-    //         /**
-    //          * topic0 address(this) always check
-    //          * 检查 topic1
-    //          * 检查 topic2
-    //          * 不检查 topic3
-    //          * 检查剩余所有参数
-    //          */
-    //         vm.expectEmit(true, true, false, true);
-    //         emit Deposit(address(0x7fc93b5620662f523AE2387aE38A444baaE68f88), i); 
-    //     }
+    function testERC20EmitBatchTransfer() public {
+        for (uint i = 0; i < 10; i++) {
+            /**
+             * topic0 = hash（“Transfera d d re e）”） *hash always check
+             * 检查 topic1 indexed user
+             * 检查 topic2 indexed token
+             * 不检查 topic3 无
+             * 检查剩余所有参数 没有 indexd 都是 data
+             */
+            vm.expectEmit(true, true, false, true);
+            emit Deposit(address(0x7fc93b5620662f523AE2387aE38A444baaE68f88), address(0x7fc93b5620662f523AE2387aE38A444baaE68f88), i, '');
+        }
+    }
+
+
+    /**
+     * .toml 文件配置 全局
+     * [fuzz]
+     * runs = 256
+     * max_test_rejects = 100000
+     */
+    /**
+     * 单文件配置
+     * forge-config: default.fuzz.runs = 1024
+     */
+    function testFuzz_SetNumber(uint x) public {
+        // address addr = address(0x7fc93b5620662f523AE2387aE38A444baaE68f88);
+        // vm.prank(addr);
+        OwnerUpOnly n1 = new OwnerUpOnly();
+       n1.setNumber(x);
+        assertEq(n1.counter(), x);
+    }
+
+    // function testERC20Transfer(address to, uint amount) public {
+    //     vm.assume(to != address(0));
+    //     vm.assume(amount > 0 && amount < 1e9 ether);
+
+    //     address alice = makeAddr('alice');
+    //     MockERC20 erc20 = new MockERC20();
+    //     erc20.initialize("Test Token", "TST", 18);
+    //     deal(address(erc20), alice, 10000);
+
     // }
+
 }
