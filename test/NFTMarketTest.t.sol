@@ -25,6 +25,8 @@ contract NFTMarketTest is Test, NFTMarketEvent {
     NFTMarket public nftMarket;
 
     uint private constant TOKENID = 0;
+    uint private constant PRICE = 100;
+    uint private constant RECHARGE = 1000;
 
 
     function setUp() public {
@@ -75,9 +77,9 @@ contract NFTMarketTest is Test, NFTMarketEvent {
         // 设置NFT市场权限
         _approveTokenIdByNftMarket(TOKENID);
         // 测试上架
-        _listedNFT(user_, TOKENID, 100, true);
+        _listedNFT(user_, TOKENID, PRICE, true);
         // token 是否成功上架
-        _listingByTokenId(user_, TOKENID, 100);
+        _listingByTokenId(user_, TOKENID, PRICE);
     }
 
     function testListedBySucceed() public {
@@ -100,17 +102,17 @@ contract NFTMarketTest is Test, NFTMarketEvent {
         _mintNFT(userIsMint, TOKENID);
 
         vm.expectRevert('ERC721: transfer caller is not owner nor approved');
-        _listedNFT(userIsMint, TOKENID, 100, false);
+        _listedNFT(userIsMint, TOKENID, PRICE, false);
 
         _approveTokenIdByNftMarket(TOKENID);
 
         vm.startPrank(userNotMint);
         vm.expectRevert('You are not the owner of this NFT');
-        _listedNFT(userIsMint, TOKENID, 100, false);
+        _listedNFT(userIsMint, TOKENID, PRICE, false);
         vm.stopPrank();
 
          // 重复上架
-        _listedRepeatNFT(TOKENID, 200);
+        _listedRepeatNFT(TOKENID, PRICE);
 
         vm.stopPrank();
     }
@@ -120,12 +122,12 @@ contract NFTMarketTest is Test, NFTMarketEvent {
 
         address purchaser = address(2);
         vm.startPrank(purchaser);
-        _recharge(purchaser, 1000);
-        erc20.approve(address(nftMarket), 100);
-        assertEq(erc20.allowance(purchaser, address(nftMarket)), 100);
+        _recharge(purchaser, RECHARGE);
+        erc20.approve(address(nftMarket), PRICE);
+        assertEq(erc20.allowance(purchaser, address(nftMarket)), PRICE);
 
         vm.expectEmit(false, false, false, true);
-        emit NFTPurchased(TOKENID, 100, purchaser);
+        emit NFTPurchased(TOKENID, PRICE, purchaser);
 
         uint balance = erc721.balanceOf(purchaser);
 
@@ -134,7 +136,7 @@ contract NFTMarketTest is Test, NFTMarketEvent {
 
         assertEq(erc721.ownerOf(TOKENID), purchaser);
         assertEq(erc721.balanceOf(purchaser), balance + 1);
-        assertEq(erc20.balanceOf(purchaser), 1000 - 100);
+        assertEq(erc20.balanceOf(purchaser), RECHARGE - PRICE);
 
         vm.stopPrank();
     }
@@ -151,7 +153,7 @@ contract NFTMarketTest is Test, NFTMarketEvent {
          _update(seller);
          _purchaser();
          assertEq(erc721.balanceOf(seller), balance - 1);
-         assertEq(erc20.balanceOf(seller), 100);
+         assertEq(erc20.balanceOf(seller), PRICE);
          vm.stopPrank();
     }
 
