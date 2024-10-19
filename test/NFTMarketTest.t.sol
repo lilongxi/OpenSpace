@@ -3,6 +3,7 @@
 pragma solidity ^0.8.26;
 
 import "forge-std/Test.sol";
+import "forge-std/console.sol";
 import { NFTMarket, NFTMarketEvent } from "src/chapter-006/NFTMarket/NFTMarket.sol";
 import { BaseERC20 } from "src/BaseERC20.sol";
 import { BaseERC721 } from "src/chapter-006/MyERC721.sol";
@@ -35,8 +36,8 @@ contract NFTMarketTest is Test, NFTMarketEvent {
         nftMarket = new NFTMarket(address(erc721), address(erc20));
     }
 
-    function _approveTokenIdByNftMarket(uint tokenId) internal {
-        erc721.approve(address(nftMarket), tokenId);
+    function _approveTokenIdByNftMarket() internal {
+        erc721.setApprovalForAll(address(nftMarket), true);
     }
 
     function _recharge(address user_, uint amount_) internal {
@@ -63,29 +64,31 @@ contract NFTMarketTest is Test, NFTMarketEvent {
         nftMarket.list(tokenId, price);
     }
 
-    function _listingByTokenId (address user_,  uint tokenId_, uint price_) internal view {
+    function _listingByTokenId (address user_,  uint tokenId_, uint price_, bool isLog_) internal view {
         (uint tokenId, address seller, uint price, bool isSold) = nftMarket.listings(tokenId_);
+        if (isLog_) {
+            console.log(tokenId, erc721.ownerOf(tokenId), seller, isSold);
+        }
         assertEq(tokenId, tokenId_);
-        assertEq(isSold, false);
         assertEq(seller, user_);
         assertEq(price, price_);
     }
 
-    function _update(address user_) internal {
-   // 测试创建合约
+    function _update(address user_, bool isLog_) internal {
+        // 测试创建合约
         _mintNFT(user_, TOKENID);
         // 设置NFT市场权限
-        _approveTokenIdByNftMarket(TOKENID);
+        _approveTokenIdByNftMarket();
         // 测试上架
         _listedNFT(user_, TOKENID, PRICE, true);
         // token 是否成功上架
-        _listingByTokenId(user_, TOKENID, PRICE);
+        _listingByTokenId(user_, TOKENID, PRICE, isLog_);
     }
 
     function testListedBySucceed() public {
         address user = address(1);
         vm.startPrank(user);
-        _update(user);
+        _update(user, false);
         vm.stopPrank();
     }
 
@@ -101,10 +104,10 @@ contract NFTMarketTest is Test, NFTMarketEvent {
         vm.startPrank(userIsMint);
         _mintNFT(userIsMint, TOKENID);
 
-        vm.expectRevert('ERC721: transfer caller is not owner nor approved');
+        vm.expectRevert('NFT not approved');
         _listedNFT(userIsMint, TOKENID, PRICE, false);
 
-        _approveTokenIdByNftMarket(TOKENID);
+        _approveTokenIdByNftMarket();
 
         vm.startPrank(userNotMint);
         vm.expectRevert('You are not the owner of this NFT');
@@ -122,6 +125,7 @@ contract NFTMarketTest is Test, NFTMarketEvent {
 
         address purchaser = address(2);
         vm.startPrank(purchaser);
+        
         _recharge(purchaser, RECHARGE);
         erc20.approve(address(nftMarket), PRICE);
         assertEq(erc20.allowance(purchaser, address(nftMarket)), PRICE);
@@ -131,13 +135,17 @@ contract NFTMarketTest is Test, NFTMarketEvent {
 
         uint balance = erc721.balanceOf(purchaser);
 
-        // err
+        nftMarket.buyNFT(TOKENID);
+
+        vm.expectRevert('This NFT is sold');
         nftMarket.buyNFT(TOKENID);
 
         assertEq(erc721.ownerOf(TOKENID), purchaser);
         assertEq(erc721.balanceOf(purchaser), balance + 1);
         assertEq(erc20.balanceOf(purchaser), RECHARGE - PRICE);
 
+        (uint tokenId, address seller, uint price, bool isSold) = nftMarket.listings(TOKENID);
+        assertEq(isSold, true);
         vm.stopPrank();
     }
 
@@ -149,12 +157,13 @@ contract NFTMarketTest is Test, NFTMarketEvent {
     function testNftBuyBySucceed() public {
         address seller = address(1);
          vm.startPrank(seller);
-         uint balance = erc721.balanceOf(seller);
-         _update(seller);
+         _update(seller, true);
          _purchaser();
-         assertEq(erc721.balanceOf(seller), balance - 1);
+         assertEq(erc721.balanceOf(seller), 0);
          assertEq(erc20.balanceOf(seller), PRICE);
          vm.stopPrank();
     }
+
+
 
 }

@@ -57,9 +57,11 @@ contract NFTMarket is IERC721Receiver, Ownable, IERC20WithCallback, NFTMarketEve
         require(nftContract.ownerOf(tokenId) == owner, "You are not the owner of this NFT");
         require(price > 0, "Price must be greater than zero");
         
-        // 从 nft 合约转走这个 token 
-        nftContract.transferFrom(owner, address(this), tokenId);
-        listings[tokenId] = Listing(tokenId, _msgSender(), price, false);
+        // 授权给 markert 地址
+        require(nftContract.isApprovedForAll(owner, address(this)) || nftContract.getApproved(tokenId) == address(this), "NFT not approved");
+
+        // nftContract.setApprovalForAll(address(this), true);
+        listings[tokenId] = Listing(tokenId, owner, price, false);
         
          emit NFTListed(tokenId, price, owner); 
     }
@@ -74,8 +76,7 @@ contract NFTMarket is IERC721Receiver, Ownable, IERC20WithCallback, NFTMarketEve
 
         nftContract.safeTransferFrom(listing.seller, from, tokenId);
 
-        listing.isSold = true;
-        listings[tokenId] = listing;
+        listings[tokenId] = Listing(listing.tokenId, listing.seller, listing.price, true);
 
         emit NFTPurchased(tokenId, listing.price, from);
 
@@ -85,14 +86,17 @@ contract NFTMarket is IERC721Receiver, Ownable, IERC20WithCallback, NFTMarketEve
     function buyNFT (uint tokenId) external {
         Listing memory listing = listings[tokenId];
         address owner = _msgSender();
+        
         require(listing.price > 0, "This NFT is not for sale.");
+        require(!listing.isSold, "This NFT is sold");
+        require(listing.seller != owner,"Cannot purchase NFTs that are self listed");
         require(tkContact.balanceOf(owner) >= listing.price, "Insufficient token balance.");
         require(tkContact.allowance(owner, address(this)) >= listing.price, "Insufficient allowance.");
         require(tkContact.transferFrom(owner, listing.seller, listing.price), "Token transfer failed.");
+
         nftContract.safeTransferFrom(listing.seller, owner, tokenId);
         
-        listing.isSold = false;
-        listings[tokenId] = listing;
+        listings[tokenId] = Listing(listing.tokenId, listing.seller, listing.price, true);
 
         emit NFTPurchased(tokenId, listing.price, owner);
     }
