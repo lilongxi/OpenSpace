@@ -26,7 +26,13 @@ buyNFT() : 普通的购买 NFT 功能，用户转入所定价的 token 数量，
 
 // 继承 IERC721Receiver 实现 onERC721Received 表明可处理 NFT 防止锁死
 // 
-contract NFTMarket is IERC721Receiver, Ownable, IERC20WithCallback {
+
+contract NFTMarketEevent {
+    event NFTListed(uint256 indexed tokenId, uint256 price, address indexed seller);
+    event NFTPurchased(uint256 indexed tokenId, uint256 price, address indexed buyer);
+}
+
+contract NFTMarket is IERC721Receiver, Ownable, IERC20WithCallback, NFTMarketEevent {
 
     ERC20WithCallback public tkContact;
     BaseERC721 public nftContract;
@@ -38,10 +44,7 @@ contract NFTMarket is IERC721Receiver, Ownable, IERC20WithCallback {
         bool isSold;
     }
 
-    mapping (uint => Listing) public listings;
-    
-    event NFTListed(uint256 indexed tokenId, uint256 price, address indexed seller);
-    event NFTPurchased(uint256 indexed tokenId, uint256 price, address indexed buyer);
+    mapping (uint => Listing) public listings; 
     
     constructor(address _nftAddr, address _tokenAddr) Ownable(_msgSender()) {
         nftContract = BaseERC721(_nftAddr);
@@ -54,8 +57,9 @@ contract NFTMarket is IERC721Receiver, Ownable, IERC20WithCallback {
         require(nftContract.ownerOf(tokenId) == owner, "You are not the owner of this NFT");
         require(price > 0, "Price must be greater than zero");
         
+        // 从 nft 合约转走这个 token 
         nftContract.transferFrom(owner, address(this), tokenId);
-        listings[tokenId] = Listing(tokenId, _msgSender(), price, true);
+        listings[tokenId] = Listing(tokenId, _msgSender(), price, false);
         
          emit NFTListed(tokenId, price, owner); 
     }
@@ -70,7 +74,7 @@ contract NFTMarket is IERC721Receiver, Ownable, IERC20WithCallback {
 
         nftContract.safeTransferFrom(listing.seller, from, tokenId);
 
-        listing.isSold = false;
+        listing.isSold = true;
         listings[tokenId] = listing;
 
         emit NFTPurchased(tokenId, listing.price, from);
