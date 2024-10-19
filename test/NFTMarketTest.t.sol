@@ -3,7 +3,7 @@
 pragma solidity ^0.8.26;
 
 import "forge-std/Test.sol";
-import { NFTMarket, NFTMarketEevent } from "src/chapter-006/NFTMarket/NFTMarket.sol";
+import { NFTMarket, NFTMarketEvent } from "src/chapter-006/NFTMarket/NFTMarket.sol";
 import { BaseERC20 } from "src/BaseERC20.sol";
 import { BaseERC721 } from "src/chapter-006/MyERC721.sol";
 
@@ -18,7 +18,7 @@ import { BaseERC721 } from "src/chapter-006/MyERC721.sol";
 ❖ 「可选」不可变测试：测试无论如何买卖，NFTMarket合约中都不可能有 Token 持仓 
  */
 
-contract NFTMarketTest is Test, NFTMarketEevent {
+contract NFTMarketTest is Test, NFTMarketEvent {
 
     BaseERC20 public erc20;
     BaseERC721 public erc721;
@@ -35,6 +35,12 @@ contract NFTMarketTest is Test, NFTMarketEevent {
 
     function _approveTokenIdByNftMarket(uint tokenId) internal {
         erc721.approve(address(nftMarket), tokenId);
+    }
+
+    function _recharge(address user_, uint amount_) internal {
+        address v = address(erc20);
+        deal(v, user_, amount_);
+        assertEq(erc20.balanceOf(user_), amount_);
     }
 
     function _mintNFT(address user_, uint tokenId_) internal {
@@ -63,17 +69,21 @@ contract NFTMarketTest is Test, NFTMarketEevent {
         assertEq(price, price_);
     }
 
-    function testListedBySucced() public {
-        address user = address(1);
-        vm.startPrank(user);
-        // 测试创建合约
-        _mintNFT(user, TOKENID);
+    function _update(address user_) internal {
+   // 测试创建合约
+        _mintNFT(user_, TOKENID);
         // 设置NFT市场权限
         _approveTokenIdByNftMarket(TOKENID);
         // 测试上架
-        _listedNFT(user, TOKENID, 100, true);
+        _listedNFT(user_, TOKENID, 100, true);
         // token 是否成功上架
-        _listingByTokenId(user, TOKENID, 100);
+        _listingByTokenId(user_, TOKENID, 100);
+    }
+
+    function testListedBySucceed() public {
+        address user = address(1);
+        vm.startPrank(user);
+        _update(user);
         vm.stopPrank();
     }
 
@@ -83,7 +93,7 @@ contract NFTMarketTest is Test, NFTMarketEevent {
      * 3. 重复上架同一个 nft
      */
     function testListedByFailed() public {
-        
+
         address userIsMint = address(1);
         address userNotMint = address(2);
         vm.startPrank(userIsMint);
@@ -105,5 +115,44 @@ contract NFTMarketTest is Test, NFTMarketEevent {
         vm.stopPrank();
     }
 
+
+    function _purchaser() internal {
+
+        address purchaser = address(2);
+        vm.startPrank(purchaser);
+        _recharge(purchaser, 1000);
+        erc20.approve(address(nftMarket), 100);
+        assertEq(erc20.allowance(purchaser, address(nftMarket)), 100);
+
+        vm.expectEmit(false, false, false, true);
+        emit NFTPurchased(TOKENID, 100, purchaser);
+
+        uint balance = erc721.balanceOf(purchaser);
+
+        // err
+        nftMarket.buyNFT(TOKENID);
+
+        assertEq(erc721.ownerOf(TOKENID), purchaser);
+        assertEq(erc721.balanceOf(purchaser), balance + 1);
+        assertEq(erc20.balanceOf(purchaser), 1000 - 100);
+
+        vm.stopPrank();
+    }
+
+    /**
+     * 1 用户购买已上架 nft
+     * 2 查看用户名下是否有这个 nft
+     * 3 nft 市场这个 nft 的 isSold 状态
+     */
+    function testNftBuyBySucceed() public {
+        address seller = address(1);
+         vm.startPrank(seller);
+         uint balance = erc721.balanceOf(seller);
+         _update(seller);
+         _purchaser();
+         assertEq(erc721.balanceOf(seller), balance - 1);
+         assertEq(erc20.balanceOf(seller), 100);
+         vm.stopPrank();
+    }
 
 }

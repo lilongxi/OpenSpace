@@ -27,12 +27,12 @@ buyNFT() : 普通的购买 NFT 功能，用户转入所定价的 token 数量，
 // 继承 IERC721Receiver 实现 onERC721Received 表明可处理 NFT 防止锁死
 // 
 
-contract NFTMarketEevent {
+contract NFTMarketEvent {
     event NFTListed(uint256 indexed tokenId, uint256 price, address indexed seller);
     event NFTPurchased(uint256 indexed tokenId, uint256 price, address indexed buyer);
 }
 
-contract NFTMarket is IERC721Receiver, Ownable, IERC20WithCallback, NFTMarketEevent {
+contract NFTMarket is IERC721Receiver, Ownable, IERC20WithCallback, NFTMarketEvent {
 
     ERC20WithCallback public tkContact;
     BaseERC721 public nftContract;
