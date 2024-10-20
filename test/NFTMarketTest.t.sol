@@ -74,21 +74,21 @@ contract NFTMarketTest is Test, NFTMarketEvent {
         assertEq(price, price_);
     }
 
-    function _update(address user_, bool isLog_) internal {
+    function _update(address user_, uint tokenId_, uint price_, bool isLog_) internal {
         // 测试创建合约
-        _mintNFT(user_, TOKENID);
+        _mintNFT(user_, tokenId_);
         // 设置NFT市场权限
         _approveTokenIdByNftMarket();
         // 测试上架
-        _listedNFT(user_, TOKENID, PRICE, true);
+        _listedNFT(user_, tokenId_, price_, true);
         // token 是否成功上架
-        _listingByTokenId(user_, TOKENID, PRICE, isLog_);
+        _listingByTokenId(user_, tokenId_, price_, isLog_);
     }
 
     function testListedBySucceed() public {
         address user = address(1);
         vm.startPrank(user);
-        _update(user, false);
+        _update(user, TOKENID, PRICE, false);
         vm.stopPrank();
     }
 
@@ -121,30 +121,41 @@ contract NFTMarketTest is Test, NFTMarketEvent {
     }
 
 
-    function _purchaser() internal {
 
-        address purchaser = address(2);
+    function _purchaser(address purchaser, uint token_, bool buySelf_, bool buyRepeat_) internal {
         vm.startPrank(purchaser);
         
         _recharge(purchaser, RECHARGE);
         erc20.approve(address(nftMarket), PRICE);
         assertEq(erc20.allowance(purchaser, address(nftMarket)), PRICE);
 
-        vm.expectEmit(false, false, false, true);
-        emit NFTPurchased(TOKENID, PRICE, purchaser);
-
         uint balance = erc721.balanceOf(purchaser);
 
-        nftMarket.buyNFT(TOKENID);
+        if (buySelf_) {
+            vm.expectRevert('Cannot purchase NFTs that are self listed');
+            nftMarket.buyNFT(token_);
+            return;
+        } else if (token_ != TOKENID) {
+            vm.expectRevert('This NFT is not for sale.');
+            nftMarket.buyNFT(token_);
+            return;
+        } else {
+            vm.expectEmit(false, false, false, true);
+            emit NFTPurchased(token_, PRICE, purchaser);
+            nftMarket.buyNFT(token_);
+        }
 
-        vm.expectRevert('This NFT is sold');
-        nftMarket.buyNFT(TOKENID);
+        if (buyRepeat_) {
+              // 重复购买
+            vm.expectRevert('This NFT is sold');
+            nftMarket.buyNFT(token_);
+        }
 
-        assertEq(erc721.ownerOf(TOKENID), purchaser);
+        assertEq(erc721.ownerOf(token_), purchaser);
         assertEq(erc721.balanceOf(purchaser), balance + 1);
         assertEq(erc20.balanceOf(purchaser), RECHARGE - PRICE);
 
-        (uint tokenId, address seller, uint price, bool isSold) = nftMarket.listings(TOKENID);
+        (, , , bool isSold) = nftMarket.listings(token_);
         assertEq(isSold, true);
         vm.stopPrank();
     }
@@ -156,14 +167,57 @@ contract NFTMarketTest is Test, NFTMarketEvent {
      */
     function testNftBuyBySucceed() public {
         address seller = address(1);
+        address purchaser = address(2);
          vm.startPrank(seller);
-         _update(seller, true);
-         _purchaser();
+         _update(seller, TOKENID, PRICE, true);
+         _purchaser(purchaser, TOKENID, false, false);
          assertEq(erc721.balanceOf(seller), 0);
          assertEq(erc20.balanceOf(seller), PRICE);
          vm.stopPrank();
     }
 
+    function testNftBuyByMyself() public {
+         address seller = address(1);
+         vm.startPrank(seller);
+         _update(seller, TOKENID, PRICE, true);
+         _purchaser(seller, TOKENID, true, false);
+         assertEq(erc721.balanceOf(seller), 1);
+         assertEq(erc20.balanceOf(seller), RECHARGE);
+         vm.stopPrank();
+    }
 
+    /**
+     * 3. 购买没有的 NFT
+     * 4. 重复购买 NFT
+     */
+    function testNftFailedByRepeatBuy() public {
+        address seller = address(1);
+        address purchaser = address(2);
+         vm.startPrank(seller);
+         _update(seller, TOKENID, PRICE, true);
+         _purchaser(purchaser, TOKENID, false, true);
+         assertEq(erc721.balanceOf(seller), 0);
+         assertEq(erc20.balanceOf(seller), PRICE);
+         vm.stopPrank();
+    }
+
+    function testNftFailedByNotThisNft() public {
+        address seller = address(1);
+        address purchaser = address(2);
+        vm.startPrank(seller);
+        _update(seller, TOKENID, PRICE, true);
+        _purchaser(purchaser, TOKENID + 1, false, true);
+        assertEq(erc721.balanceOf(seller), 1);
+        assertEq(erc20.balanceOf(seller), PRICE - PRICE);
+        vm.stopPrank();
+    }
+
+    /** 
+     * 单文件配置
+     * forge-config: default.fuzz.runs = 100
+     */
+    function testFuzz_RandomListedNft(uint tokenId, uint price, address user) public pure {
+        console.log(tokenId, price, user);
+    }
 
 }
