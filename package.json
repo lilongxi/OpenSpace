@@ -11,9 +11,17 @@
     "admin:publish": "forge script script/Admin.s.sol:AdminScript --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231 --private-key b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840",
     "myToken:publish": "forge script script/MyToken.s.sol:MyTokenScript --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231 --private-key b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840",
     "tokenBank:publish": "forge script script/TokenBank.s.sol:TokenBankScript --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231 --private-key b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840",
-    "myNFT:create": "forge create MyNFTLLX --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231 --private-key b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840"
+    "myNFT:create": "forge create MyNFTLLX --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231 --private-key b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840",
+    "dev:008": "npx ts-node src/chapter-008/index.ts"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.1.0",
+    "@types/node": "^22.7.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3",
+    "viem": "^2.21.30"
+  }
 }
