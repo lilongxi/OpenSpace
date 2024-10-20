@@ -216,7 +216,7 @@ contract NFTMarketTest is Test, NFTMarketEvent {
      * 单文件配置
      * forge-config: default.fuzz.runs = 100
      */
-    function testFuzz_RandomListedNft(uint tokenId, uint price, address user) public pure {
+    function testFuzz_RandomListedNft(uint tokenId, uint price, address user) public pure   {
         console.log(tokenId, price, user);
     }
 

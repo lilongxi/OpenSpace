@@ -1,3 +1,11 @@
+<!--
+ * @Author: leelongxi leelongxi@foxmail.com
+ * @Date: 2024-10-13 18:02:58
+ * @LastEditors: leelongxi leelongxi@foxmail.com
+ * @LastEditTime: 2024-10-20 17:38:57
+ * @FilePath: /OpenSpace/README.md
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 ## Foundry
 
 **Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
@@ -64,3 +72,5 @@ $ forge --help
 $ anvil --help
 $ cast --help
 ```
+
+forge install openzeppelin-contracts-v4.9.6=OpenZeppelin/openzeppelin-contracts@v4.9.6
