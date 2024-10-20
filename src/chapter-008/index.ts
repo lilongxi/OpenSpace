@@ -2,7 +2,7 @@
  * @Author: leelongxi leelongxi@foxmail.com
  * @Date: 2024-10-20 17:03:36
  * @LastEditors: leelongxi leelongxi@foxmail.com
- * @LastEditTime: 2024-10-20 17:29:38
+ * @LastEditTime: 2024-10-20 17:35:51
  * @FilePath: /OpenSpace/src/chapter-008/index.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -18,22 +18,18 @@ async function main(contractAddr: Address, tokenId: number) {
         transport: http()
     })
 
-    try {
-        const owner = await client.readContract({
-            address: contractAddr,
-            abi: ERC721ABI.abi,
-            functionName: 'ownerOf',
-            args: [
-                tokenId
-            ]
-        })
+    const readContractProp = {
+        address: contractAddr,
+        abi: ERC721ABI.abi,
+        args: [
+            tokenId
+        ]
+    }
 
-        const tokenURI = await client.readContract({
-            address: contractAddr,
-            abi: ERC721ABI.abi,
-            functionName: 'tokenURI',
-            args: [tokenId],
-        })
+    try {
+        const [owner, tokenURI] = await Promise.all(
+            [ client.readContract({ ...readContractProp, functionName: 'ownerOf', }), client.readContract({ ...readContractProp, functionName: 'tokenURI' }) ]
+        )
 
         return {
             owner,
