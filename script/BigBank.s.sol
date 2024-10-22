@@ -10,10 +10,10 @@ contract BigBankScript is Script {
     function setUp() public {}
 
     function run() public {
+        // vm.createSelectFork("sepolia");
         vm.startBroadcast();
 
         bigBank = new BigBank();
-
         vm.stopBroadcast();
     }
 }
