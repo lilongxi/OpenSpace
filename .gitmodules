@@ -10,3 +10,6 @@
 [submodule "lib/openzeppelin-contracts-v4.9.6"]
 	path = lib/openzeppelin-contracts-v4.9.6
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "lib/DengLian_web3"]
+	path = lib/DengLian_web3
+	url = https://github.com/Monkiia/DengLian_web3

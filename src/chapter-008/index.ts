@@ -2,7 +2,7 @@
  * @Author: leelongxi leelongxi@foxmail.com
  * @Date: 2024-10-20 17:03:36
  * @LastEditors: leelongxi leelongxi@foxmail.com
- * @LastEditTime: 2024-10-20 17:35:51
+ * @LastEditTime: 2024-10-22 22:02:16
  * @FilePath: /OpenSpace/src/chapter-008/index.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -10,6 +10,7 @@ import { createPublicClient, http } from 'viem'
 import { mainnet } from "viem/chains";
 import type { Address } from 'viem';
 import ERC721ABI from '@openzeppelin/contracts/build/contracts/ERC721.json';
+
 
 async function main(contractAddr: Address, tokenId: number) {
 
