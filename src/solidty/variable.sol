@@ -19,6 +19,7 @@ pragma solidity ^0.8.26;
  * pure：与合约状态无关的函数
  * 默认写操作：全网广播 共识确认
  * 
+ *  涉及到 transcation 逻辑
  */
 
 contract IndexContract {
@@ -35,5 +36,5 @@ contract IndexContract {
 
     }
 
-    
+
 }
