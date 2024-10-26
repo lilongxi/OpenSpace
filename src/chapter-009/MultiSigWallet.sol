@@ -4,10 +4,13 @@ pragma solidity ^0.8.26;
 import "oz_v5/contracts/access/Ownable.sol";
 import "oz_v5/contracts/utils/Context.sol";
 
-contract MultiSigWallet is Ownable {
+contract MultiSigWallet {
 
-    constructor(address[] memory _owners, uint _threshold) Ownable(_msgSender()) {
+    address private _owner;
+
+    constructor(address[] memory _owners, uint _threshold){
         threshold = _threshold;
+        _owner = msg.sender;
         _initalizaSigWallet(_owners, _threshold);
     }
 
@@ -30,6 +33,11 @@ contract MultiSigWallet is Ownable {
     event TransactionConfirmed(uint indexed txIndex, address indexed owner);
     event TransactionExecuted(uint indexed txIndex);
 
+    modifier onlyOwner() {
+        require(msg.sender == _owner, "Only administrators can call");
+        _;
+    }
+
     modifier txExists(uint _txIndex) {
         require(_txIndex < transactions.length, "Transaction does not exist");
         _;
@@ -41,7 +49,7 @@ contract MultiSigWallet is Ownable {
     }
 
     modifier notConfirmed(uint _txIndex) {
-        require(!isConfirmed[_txIndex][_msgSender()], "Transaction already confirmed");
+        require(!isConfirmed[_txIndex][_owner], "Transaction already confirmed");
         _;
     }
 
@@ -60,7 +68,7 @@ contract MultiSigWallet is Ownable {
     }
 
     // 提交提案 发起一笔多签交易
-    function submitTransaction(address _to, uint _value, bytes memory _data) public onlyOwner {
+    function submitTransaction(address _to, uint _value, bytes memory _data) public {
         transactions.push(Transcation({
             to: _to,
             value: _value,
@@ -74,7 +82,7 @@ contract MultiSigWallet is Ownable {
     // 确认提案 从第 txIndex 确认提案
     function confirmTransaction(uint _txIndex) public onlyOwner txExists(_txIndex) notExecuted(_txIndex) notConfirmed(_txIndex) {
 
-        address owner = _msgSender();
+        address owner = _owner;
         Transcation storage transaction = transactions[_txIndex];
         transaction.confirmCount += 1;
         isConfirmed[_txIndex][owner] = true;
