@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/DengLian_web3" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/OpenSpace" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/forge-std" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin-contracts" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin-contracts-v4.9.6" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin-contracts-v4.9.6/lib/erc4626-tests" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin-contracts-v4.9.6/lib/forge-std" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin-contracts-v4.9.6/lib/forge-std/lib/ds-test" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin-contracts/lib/erc4626-tests" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin-contracts/lib/forge-std" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/openzeppelin-contracts/lib/forge-std/lib/ds-test" vcs="Git" />
+  </component>
+</project>
