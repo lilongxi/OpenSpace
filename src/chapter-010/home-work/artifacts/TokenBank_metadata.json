@@ -278,11 +278,11 @@
 			]
 		},
 		"src/chapter-010/home-work/TokenBank.sol": {
-			"keccak256": "0xd121c46f39d7b55deabe9855b53da09780931e75b069d2d11f924dc5ddfdc581",
+			"keccak256": "0xce77aa4483ab04bbe14bae2d3fb1f43b640fa3a1053a8359cf0f2f983c8f1011",
 			"license": "SEE LICENSE IN LICENSE",
 			"urls": [
-				"bzz-raw://db293af2d51c06e6d886975bf3a21cf9c9fdef430f6d182f6e0a955517a42034",
-				"dweb:/ipfs/Qma9dji3Umb2N4vFXZaRjPPT2tivcthSGQgDZ9QpFv6PXS"
+				"bzz-raw://8ca5af9a973a1a54444b4a300d93a08dcce04976506139afa1197ba189d2643c",
+				"dweb:/ipfs/QmQ8WbHWNhJuU9vk6kguBzDqT5h8XXi1Xtqv5ARjBybMpN"
 			]
 		}
 	},

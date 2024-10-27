@@ -831,11 +831,11 @@
 			]
 		},
 		"src/chapter-010/home-work/index.sol": {
-			"keccak256": "0xc0e540cd605bcda82a02ee707f581cdbf54bc07600d648829fd3b352caa12339",
+			"keccak256": "0x1ee1c33f170bf49f1abb9eb1978cd4e791ad651d70ba5558f1af6377356a91ad",
 			"license": "SEE LICENSE IN LICENSE",
 			"urls": [
-				"bzz-raw://ad3be1398c8c254abb0953a7049ce6f4d8c995c0ef5a6fc839e94af31b3757b6",
-				"dweb:/ipfs/QmejU3BkV58cUQtn7biz5Rr43Zp459itx5d4WLbgCXtfQn"
+				"bzz-raw://44bd0c09eea6eaacb723e2bd2aace05764b41d5658eb95949040bbb84cc9be57",
+				"dweb:/ipfs/QmTKR5uhHyKN3AnuRot7vY8RGowR27PQdT5LvE88gNNKow"
 			]
 		}
 	},

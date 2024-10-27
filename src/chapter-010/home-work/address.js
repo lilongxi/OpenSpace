@@ -2,14 +2,14 @@
  * @Author: leelongxi leelongxi@foxmail.com
  * @Date: 2024-10-27 11:45:18
  * @LastEditors: leelongxi leelongxi@foxmail.com
- * @LastEditTime: 2024-10-27 12:17:03
+ * @LastEditTime: 2024-10-27 13:32:20
  * @FilePath: /OpenSpace/src/chapter-010/home-work/address.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 // 示例用法
-const tokenBankAddress = "0x052EFc2E00cc5968906B3767cC77b5C82018ED5F"; // TokenBank 合约地址
+const tokenBankAddress = "0xEf9f1ACE83dfbB8f559Da621f4aEA72C6EB10eBf"; // TokenBank 合约地址
 const tokenContractAddress = "0xe7C288Bb298277543481085193B495945BbE1661"; // ERC20Permit 代币合约地址
-const ownerPrivateKey = "0xb98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840"; // 代币持有者的私钥
+const ownerPrivateKey = "b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840"; // 代币持有者的私钥
 const spender = tokenBankAddress; // 授权的地址
 const jsonRpcUrl = 'https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231'
 

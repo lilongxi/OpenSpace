@@ -2,7 +2,7 @@
  * @Author: leelongxi leelongxi@foxmail.com
  * @Date: 2024-10-26 16:24:51
  * @LastEditors: leelongxi leelongxi@foxmail.com
- * @LastEditTime: 2024-10-27 12:17:12
+ * @LastEditTime: 2024-10-27 13:59:12
  * @FilePath: /OpenSpace/src/chapter-010/home-work/permitAndDeposit.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -65,26 +65,61 @@ async function permitDeposit(tokenBankAddress, tokenAddress, ownerPrivateKey, am
     const signature = await ownerSigner.signTypedData(domain, types, value);
     const { v, r, s } = ethers.Signature.from(signature);
 
+    // return console.log(
+    //     ownerSigner.address,
+    //     tokenAddress,
+    //     amount,
+    //     deadline,
+    //     v,
+    //     r,
+    //     s
+    // )
+
     // 调用 permitDeposit
     const tx = await tokenBankContract.connect(ownerSigner).permitDeposit(
+        ownerSigner.address,
         tokenAddress,
         amount,
         deadline,
         v,
         r,
-        s
+        s,
+        ethers.parseUnits("10", 18)
     );
 
+   
     console.log("Transaction Hash:", tx.hash);
     const receipt = await tx.wait();
     console.log("Transaction was mined in block:", receipt.blockNumber);
+    
+}
+
+async function balanceOf(
+    tokenBankAddress, ownerPrivateKey,
+) {
+     // 初始化 provider 和 signer
+     const provider = new ethers.JsonRpcProvider(jsonRpcUrl);
+     const ownerSigner = new ethers.Wallet(ownerPrivateKey, provider);
+     const tokenBankContract = new ethers.Contract(tokenBankAddress, TokenBankABI.abi, provider);
+     console.log(ownerSigner.address)
+    // 查询存款余额
+    const balance = await tokenBankContract.balanceOf(ownerSigner.address, {
+        gasLimit: 100000
+    });
+    console.log(balance)
+    console.log(`Balance of ${ownerSigner.address}: ${ethers.formatUnits(balance, 18)} tokens`);
 }
 
 permitDeposit(
     tokenBankAddress,
     tokenContractAddress,
     ownerPrivateKey,
-    ethers.parseUnits("1000", 18) // 存款金额（假设代币有18位小数）
+    ethers.parseUnits("100", 18) // 存款金额（假设代币有18位小数）
 )
     .then(() => console.log('存款成功'))
     .catch((error) => console.error('错误:', error));
+
+// balanceOf(
+//     tokenBankAddress,
+//     ownerPrivateKey
+// ).then(() => {}).catch((error) => console.error('错误:', error));
