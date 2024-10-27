@@ -32,7 +32,7 @@ contract NFTMarketEvent {
     event NFTPurchased(uint256 indexed tokenId, uint256 price, address indexed buyer);
 }
 
-contract NFTMarket is IERC721Receiver, Ownable, IERC20WithCallback, NFTMarketEvent {
+ contract NFTMarket is IERC721Receiver, Ownable, IERC20WithCallback, NFTMarketEvent {
 
     ERC20WithCallback public tkContact;
     BaseERC721 public nftContract;
