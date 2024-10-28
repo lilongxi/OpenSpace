@@ -11,6 +11,16 @@ contract TokenBank {
     // 存款记录
     mapping(address => uint256) public deposits;
 
+    event Deposit(address indexed user, address indexed bank, uint amount);
+    event DepositV2(uint v2, uint amount);
+    event PermitDeposit( address owner,
+        address spender,
+        uint amount,
+        uint deadline,
+        uint8 v,
+        bytes32 r,
+        bytes32 s);
+
     constructor(address _token) {
         token = ERC20Permit(_token);
     }
@@ -25,6 +35,7 @@ contract TokenBank {
         bytes32 r,
         bytes32 s
     ) public {
+        emit PermitDeposit(owner, spender, amount, deadline, v, r, s);
          // 调用 permit 方法
         token.permit(owner, spender, amount, deadline, v, r, s);
         // 执行存款
@@ -32,8 +43,10 @@ contract TokenBank {
     }
 
     function deposit(address from, uint amount) internal {
+        emit Deposit(from, address(this), amount);
         token.transferFrom(from, address(this), amount);
         deposits[from] += amount;
+        emit DepositV2(deposits[from], token.balanceOf(from));
     }
 
     // 查看存款余额

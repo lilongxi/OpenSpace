@@ -9,198 +9,26 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_token",
-						"type": "address"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "constructor"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "user",
-						"type": "address"
-					},
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "bank",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "Deposit",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "v2",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "DepositV2",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "address",
 						"name": "spender",
 						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "deadline",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint8",
-						"name": "v",
-						"type": "uint8"
-					},
-					{
-						"indexed": false,
-						"internalType": "bytes32",
-						"name": "r",
-						"type": "bytes32"
-					},
-					{
-						"indexed": false,
-						"internalType": "bytes32",
-						"name": "s",
-						"type": "bytes32"
 					}
 				],
-				"name": "PermitDeposit",
-				"type": "event"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "account",
-						"type": "address"
-					}
-				],
-				"name": "balanceOf",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"name": "deposits",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "spender",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "deadline",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint8",
-						"name": "v",
-						"type": "uint8"
-					},
-					{
-						"internalType": "bytes32",
-						"name": "r",
-						"type": "bytes32"
-					},
-					{
-						"internalType": "bytes32",
-						"name": "s",
-						"type": "bytes32"
-					}
-				],
-				"name": "permitDeposit",
+				"name": "approve",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "token",
-				"outputs": [
+				"inputs": [
 					{
-						"internalType": "contract ERC20Permit",
-						"name": "",
-						"type": "address"
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
 					}
 				],
-				"stateMutability": "view",
+				"name": "transfer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
@@ -217,7 +45,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"src/chapter-010/home-work/TokenBank.sol": "TokenBank"
+			"src/chapter-010/Compare.sol": "UseERC20"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},
@@ -370,12 +198,12 @@
 				"dweb:/ipfs/QmVBEei6aTnvYNZp2CHYVNKyZS4q1KkjANfY39WVXZXVoT"
 			]
 		},
-		"src/chapter-010/home-work/TokenBank.sol": {
-			"keccak256": "0x8383c2eba3be23f1d2088220b2a613a0c50847196a038f55fdf31613ae703de4",
+		"src/chapter-010/Compare.sol": {
+			"keccak256": "0xbc421362e20dcd1bcb94b3071f4198e37203157b0500361867f2f706d7350195",
 			"license": "SEE LICENSE IN LICENSE",
 			"urls": [
-				"bzz-raw://8663063d6bc2e367fe7b85b3e826507702b2afae0b8c7f5e2246df265b165e7d",
-				"dweb:/ipfs/QmdVP7WuYhLCAHDcFF38rd2kgtzVPxXzJ7n1yAKkqaabtR"
+				"bzz-raw://5d77053f3cbd9729f1191220b889316ff5d0abbe2f01e728e6c08a66a43c2653",
+				"dweb:/ipfs/QmbBdKnCCHhKc5pCLic7v85RTSd5YQ9dqMA6K9F2ZbUnqD"
 			]
 		}
 	},

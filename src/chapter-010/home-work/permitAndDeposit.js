@@ -2,18 +2,19 @@
  * @Author: leelongxi leelongxi@foxmail.com
  * @Date: 2024-10-26 16:24:51
  * @LastEditors: leelongxi leelongxi@foxmail.com
- * @LastEditTime: 2024-10-27 13:59:12
+ * @LastEditTime: 2024-10-28 18:53:04
  * @FilePath: /OpenSpace/src/chapter-010/home-work/permitAndDeposit.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 const { ethers } = require("ethers");
-const { tokenBankAddress, tokenContractAddress, ownerPrivateKey, jsonRpcUrl } = require('./address')
+const { tokenBankAddress, tokenContractAddress, ownerPrivateKey, jsonRpcUrl, webscoketRpcUrl } = require('./address')
 const TokenBankABI = require("./artifacts/TokenBank.json");
 const MyCustomToken = require("./artifacts/MyCustomToken.json");
 
 async function permitDeposit(tokenBankAddress, tokenAddress, ownerPrivateKey, amount) {
     // 初始化 provider 和 signer
     const provider = new ethers.JsonRpcProvider(jsonRpcUrl);
+    // const provider = new ethers.WebSocketProvider(webscoketRpcUrl);
     const ownerSigner = new ethers.Wallet(ownerPrivateKey, provider);
     
     // 获取合约实例
@@ -29,6 +30,13 @@ async function permitDeposit(tokenBankAddress, tokenAddress, ownerPrivateKey, am
     //     "function permitDeposit(address token, uint256 amount, uint256 deadline, uint8 v, bytes32 r, bytes32 s)"
     // ];
     const tokenBankContract = new ethers.Contract(tokenBankAddress, TokenBankABI.abi, provider);
+
+    // tokenBankContract.on("Deposit", (from, to, value) => {
+    //     console.log(`Transfer event detected: from ${from} to ${to}, value ${value.toString()}`);
+    // })
+    // tokenBankContract.on("PermitDeposit", (...arg) => {
+    //     console.log(...arg)
+    // })
 
     // 设置 permit 相关参数
     const nonce = await tokenContract.nonces(ownerSigner.address);
@@ -84,7 +92,7 @@ async function permitDeposit(tokenBankAddress, tokenAddress, ownerPrivateKey, am
         v,
         r,
         s,
-        ethers.parseUnits("10", 18)
+        // ethers.parseUnits("10", 18)
     );
 
    
@@ -104,7 +112,7 @@ async function balanceOf(
      console.log(ownerSigner.address)
     // 查询存款余额
     const balance = await tokenBankContract.balanceOf(ownerSigner.address, {
-        gasLimit: 100000
+        // gasLimit: 100000
     });
     console.log(balance)
     console.log(`Balance of ${ownerSigner.address}: ${ethers.formatUnits(balance, 18)} tokens`);

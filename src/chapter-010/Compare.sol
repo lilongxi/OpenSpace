@@ -21,10 +21,12 @@ contract CompareERC20 is ERC20 {
 
 contract UseERC20 {
     CompareERC20 erc20;
-    function approveAndTransfer (address spender, uint amount) public {
-        //  _allowances[owner][spender] = value;
-        erc20.approve(spender, 1000); //  第一次链上交易
-        // 由 spender 转移 500 个代币
+    // basic gas -> 21000 gas
+    function approve (address spender) public {
+        erc20.approve(spender, 1000);
+    }
+    // basic gas -> 21000 gas + 70w gas
+    function transfer (uint amount) public {
         erc20.transferFrom(msg.sender, address(this), amount);  // 第二次链上交易
     }
 }
@@ -39,6 +41,7 @@ contract CompareERC20Premit is ERC20Permit {
 contract UseERC20Premit {
     CompareERC20Premit erc20Premit;
 
+    // basic gas 21000 + 130w
     function permitAndTransfer (
         address spender,
         uint256 amount,
@@ -47,10 +50,7 @@ contract UseERC20Premit {
         bytes32 r,
         bytes32 s
     ) public {
-         // 通过 permit 方法授权，不需要链上 approve
-        //   _allowances[owner][spender] = value;
         erc20Premit.permit(msg.sender, spender, amount, deadline, v, r, s); // 一次链上交易
-        // 由 spender 转移 500 个代币
         erc20Premit.transferFrom(msg.sender, address(this), 500); // 另一笔链上交易
     }
 }
