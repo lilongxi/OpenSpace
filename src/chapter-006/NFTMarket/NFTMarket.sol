@@ -83,7 +83,7 @@ contract NFTMarketEvent {
         return true;
     }
 
-    function buyNFT (uint tokenId) external {
+    function buyNFT (uint tokenId) public {
         Listing memory listing = listings[tokenId];
         address owner = _msgSender();
         

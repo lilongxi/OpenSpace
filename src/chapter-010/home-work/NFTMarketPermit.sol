@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.26;
 
-// import "oz_v5/contracts/utils/ReentrancyGuard.sol";
+import "oz_v5/contracts/utils/ReentrancyGuard.sol";
 import "../../chapter-006/NFTMarket/NFTMarket.sol";
 
-contract NFTMarketPermit is NFTMarket {
+contract NFTMarketPermit is NFTMarket, ReentrancyGuard {
     mapping (address => bool) public whitelisted;
     mapping (address => uint256) public nonces;
 
@@ -21,7 +21,7 @@ contract NFTMarketPermit is NFTMarket {
     whitelisted[user] = false;
   }
 
-  function permitBuyEip191(uint tokenId, uint nonce, uint deadline, uint8 v, bytes32 r, bytes32 s) external { 
+  function permitBuyEip191(uint tokenId, uint nonce, uint deadline, uint8 v, bytes32 r, bytes32 s) public nonReentrant { 
 
     address buyer = _msgSender();
     require(whitelisted[buyer], "You are not whitelisted for this purchase.");
@@ -33,7 +33,7 @@ contract NFTMarketPermit is NFTMarket {
     // 验证是否在截止日期内
     require(block.timestamp <= deadline, "Signature expired");
 
-    this.buyNFT(tokenId);
+    buyNFT(tokenId);
 
   }
 
@@ -44,7 +44,7 @@ contract NFTMarketPermit is NFTMarket {
     uint8 v,
     bytes32 r,
     bytes32 s
-  ) external {
+  ) public nonReentrant {
 
     address buyer = _msgSender();
     require(whitelisted[buyer], "You are not whitelisted for this purchase.");
@@ -69,7 +69,7 @@ contract NFTMarketPermit is NFTMarket {
 
     nonces[buyer]++;
 
-    this.buyNFT(tokenId);
+    buyNFT(tokenId);
 
   }
 

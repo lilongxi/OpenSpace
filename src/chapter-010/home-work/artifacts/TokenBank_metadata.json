@@ -17,99 +17,6 @@
 				"type": "constructor"
 			},
 			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "user",
-						"type": "address"
-					},
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "bank",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "Deposit",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "v2",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "DepositV2",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "spender",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "deadline",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint8",
-						"name": "v",
-						"type": "uint8"
-					},
-					{
-						"indexed": false,
-						"internalType": "bytes32",
-						"name": "r",
-						"type": "bytes32"
-					},
-					{
-						"indexed": false,
-						"internalType": "bytes32",
-						"name": "s",
-						"type": "bytes32"
-					}
-				],
-				"name": "PermitDeposit",
-				"type": "event"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -136,7 +43,7 @@
 						"type": "address"
 					}
 				],
-				"name": "deposits",
+				"name": "balances",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -192,7 +99,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "token",
+				"name": "permitToken",
 				"outputs": [
 					{
 						"internalType": "contract ERC20Permit",
@@ -234,6 +141,14 @@
 		]
 	},
 	"sources": {
+		"forge-std/console.sol": {
+			"keccak256": "0x91d5413c2434ca58fd278b6e1e79fd98d10c83931cc2596a6038eee4daeb34ba",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://91ccea707361e48b9b7a161fe81f496b9932bc471e9c4e4e1e9c283f2453cc70",
+				"dweb:/ipfs/QmcB66sZhQ6Kz7MUHcLE78YXRUZxoZnnxZjN6yATsbB2ec"
+			]
+		},
 		"lib/openzeppelin-contracts/contracts/interfaces/IERC5267.sol": {
 			"keccak256": "0x92aa1df62dc3d33f1656d63bede0923e0df0b706ad4137c8b10b0a8fe549fd92",
 			"license": "MIT",
@@ -371,11 +286,11 @@
 			]
 		},
 		"src/chapter-010/home-work/TokenBank.sol": {
-			"keccak256": "0x8383c2eba3be23f1d2088220b2a613a0c50847196a038f55fdf31613ae703de4",
+			"keccak256": "0x3f5e9367061792bb72a1202cc778273ca319ebbe9db835e4b82753debb81ef59",
 			"license": "SEE LICENSE IN LICENSE",
 			"urls": [
-				"bzz-raw://8663063d6bc2e367fe7b85b3e826507702b2afae0b8c7f5e2246df265b165e7d",
-				"dweb:/ipfs/QmdVP7WuYhLCAHDcFF38rd2kgtzVPxXzJ7n1yAKkqaabtR"
+				"bzz-raw://2483dd90cf860e9769923491da2cf4e1c20dd7aa8ea5bcff25eb285b5009262b",
+				"dweb:/ipfs/QmTwt9EFL6ziJSjKgiy139B1QX2iT7Jg92nq3aUKJsHzJL"
 			]
 		}
 	},

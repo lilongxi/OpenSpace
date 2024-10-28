@@ -2,7 +2,7 @@
  * @Author: leelongxi leelongxi@foxmail.com
  * @Date: 2024-10-26 16:24:51
  * @LastEditors: leelongxi leelongxi@foxmail.com
- * @LastEditTime: 2024-10-28 18:53:04
+ * @LastEditTime: 2024-10-28 22:03:55
  * @FilePath: /OpenSpace/src/chapter-010/home-work/permitAndDeposit.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -69,6 +69,8 @@ async function permitDeposit(tokenBankAddress, tokenAddress, ownerPrivateKey, am
         deadline: deadline
     };
 
+    console.log(ownerSigner.address)
+
     // 生成签名
     const signature = await ownerSigner.signTypedData(domain, types, value);
     const { v, r, s } = ethers.Signature.from(signature);
@@ -99,7 +101,11 @@ async function permitDeposit(tokenBankAddress, tokenAddress, ownerPrivateKey, am
     console.log("Transaction Hash:", tx.hash);
     const receipt = await tx.wait();
     console.log("Transaction was mined in block:", receipt.blockNumber);
-    
+
+    // const balance = await tokenBankContract.balanceOf(ownerSigner.address, {
+    //     // gasLimit: 100000
+    // });
+    // console.log(`Balance of ${ownerSigner.address}: ${ethers.formatUnits(balance, 18)} tokens`);
 }
 
 async function balanceOf(
