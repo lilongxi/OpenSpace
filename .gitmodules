@@ -13,3 +13,6 @@
 [submodule "lib/DengLian_web3"]
 	path = lib/DengLian_web3
 	url = https://github.com/Monkiia/DengLian_web3
+[submodule "lib/permit2"]
+	path = lib/permit2
+	url = https://github.com/Uniswap/permit2
