@@ -32,7 +32,7 @@ contract NFTMarketPermit is NFTMarket, ReentrancyGuard {
   function permitBuyEip191(uint tokenId, uint nonce, uint deadline, uint8 v, bytes32 r, bytes32 s) public nonReentrant { 
 
     address buyer = _msgSender();
-    require(whitelisted[buyer], "You are not whitelisted for this purchase.");
+    // require(whitelisted[buyer], "You are not whitelisted for this purchase.");
 
     bytes32 hash = keccak256(abi.encodePacked(buyer, nonce, deadline));
     address signer = ecrecover(hash, v, r, s);
