@@ -55,7 +55,7 @@ contract NFTMarketPermit is NFTMarket, ReentrancyGuard {
   ) public nonReentrant {
 
     address buyer = _msgSender();
-    require(whitelisted[buyer], "You are not whitelisted for this purchase.");
+    // require(whitelisted[buyer], "You are not whitelisted for this purchase.");
 
     bytes32 structHash = keccak256(
         abi.encode(
@@ -70,7 +70,7 @@ contract NFTMarketPermit is NFTMarket, ReentrancyGuard {
     bytes32 digest = _hashTypedDataV4(structHash);
      // 验证签名
     address signer = ecrecover(digest, v, r, s);
-    require(signer == owner(), "Invalid signature");
+    require(signer == _msgSender(), "Invalid signature");
 
      // 验证是否在截止日期内
     require(block.timestamp <= deadline, "Signature expired");
