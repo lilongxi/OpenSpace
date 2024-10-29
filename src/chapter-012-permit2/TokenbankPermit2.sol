@@ -4,7 +4,7 @@ pragma solidity ^0.8.26;
 import "oz_v5/contracts/token/ERC20/extensions/ERC20Permit.sol";
 import "lib/permit2/src/Permit2.sol"; // Permit2合约的接口或具体实现
 
-contract TokenbankPermit2 {
+contract TokenBankPermit2 {
 
     ERC20Permit public token;
     Permit2 public permit2;
