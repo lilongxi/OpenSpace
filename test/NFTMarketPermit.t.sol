@@ -9,6 +9,8 @@ import { BaseERC20 } from "src/BaseERC20.sol";
 import { BaseERC721 } from "src/chapter-006/MyERC721.sol";
 import { NFTMarketPermit } from "src/chapter-010/home-work/NFTMarketPermit.sol";
 
+// TODO 重放攻击未测试
+// TODO eip712 未测试
 contract NFTMarketPermitTestV2 is Test, Nonces {
 
     BaseERC20 public erc20;
