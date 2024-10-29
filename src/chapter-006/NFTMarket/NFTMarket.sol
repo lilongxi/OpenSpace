@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "forge-std/console.sol";
 import "oz_v5/contracts/utils/Context.sol";
 import "oz_v5/contracts/access/Ownable.sol";
 import "oz_v5/contracts/token/ERC721/IERC721Receiver.sol";
@@ -90,6 +91,8 @@ contract NFTMarketEvent {
         require(listing.price > 0, "This NFT is not for sale.");
         require(!listing.isSold, "This NFT is sold");
         require(listing.seller != owner,"Cannot purchase NFTs that are self listed");
+
+        console.log(tkContact.allowance(owner, address(this)), owner);
         require(tkContact.balanceOf(owner) >= listing.price, "Insufficient token balance.");
         require(tkContact.allowance(owner, address(this)) >= listing.price, "Insufficient allowance.");
         require(tkContact.transferFrom(owner, listing.seller, listing.price), "Token transfer failed.");
@@ -99,6 +102,10 @@ contract NFTMarketEvent {
         listings[tokenId] = Listing(listing.tokenId, listing.seller, listing.price, true);
 
         emit NFTPurchased(tokenId, listing.price, owner);
+    }
+
+    function getListingById(uint tokenId) public view returns (Listing memory) {
+        return listings[tokenId];
     }
 
     //  要求实现避免锁死

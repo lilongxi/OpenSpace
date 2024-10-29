@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.26;
 
+import "forge-std/console.sol";
+
+import "oz_v5/contracts/utils/Context.sol";
 import "oz_v5/contracts/utils/ReentrancyGuard.sol";
 import "../../chapter-006/NFTMarket/NFTMarket.sol";
 
@@ -13,12 +16,17 @@ contract NFTMarketPermit is NFTMarket, ReentrancyGuard {
 
    constructor(address _nftAddr, address _tokenAddr) NFTMarket(_nftAddr, _tokenAddr) {}
 
-  function setWhiteisted(address user) external onlyOwner {
+  function setWhiteisted(address user) external onlyOwner returns(bool) {
     whitelisted[user] = true;
+    return whitelisted[user];
   }
 
   function revokeWhitelisted(address user) external onlyOwner {
     whitelisted[user] = false;
+  }
+
+  function getWhitelistedByAddr(address addr) public view returns(bool) {
+    return whitelisted[addr];
   }
 
   function permitBuyEip191(uint tokenId, uint nonce, uint deadline, uint8 v, bytes32 r, bytes32 s) public nonReentrant { 
@@ -28,7 +36,7 @@ contract NFTMarketPermit is NFTMarket, ReentrancyGuard {
 
     bytes32 hash = keccak256(abi.encodePacked(buyer, nonce, deadline));
     address signer = ecrecover(hash, v, r, s);
-    require(signer == owner(), "Invalid signature");
+    require(signer == _msgSender(), "Invalid signature");
 
     // 验证是否在截止日期内
     require(block.timestamp <= deadline, "Signature expired");
