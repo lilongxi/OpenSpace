@@ -2,17 +2,17 @@
 pragma solidity ^0.8.26;
 
 import {Script, console} from "forge-std/Script.sol";
-import { TokenBank } from "../src/TokenBank.sol";
+import { TokenBankPermit2 } from "../src/chapter-012-permit2/TokenBankPermit2.sol";
 
-contract TokenBankScript is Script {
-    TokenBank public tokenBank;
+contract TokenBankPermit2Script is Script {
+    TokenBankPermit2 public tokenBankPermit2;
 
     function setUp() public {}
 
     function run() public {
         vm.startBroadcast();
 
-        tokenBank = new TokenBank(0xb93F55bc228E9ceB278B2018b650fe2732312476);
+        tokenBankPermit2 = new TokenBankPermit2();
 
         vm.stopBroadcast();
     }

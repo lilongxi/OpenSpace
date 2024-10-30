@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: SEE LICENSE IN LICENSE
-pragma solidity ^0.8.26;
+
+pragma solidity >=0.7.0 <0.9.0;
 
 import "oz_v5/contracts/token/ERC20/extensions/ERC20Permit.sol";
 import "permit2/src/Permit2.sol"; // Permit2合约的接口或具体实现
@@ -36,7 +37,7 @@ contract TokenBankPermit2 {
     }
 
     function balanceOf(address account) external view returns (uint) {
-        returns balances[account];
+        return balances[account];
     }
 
 }
