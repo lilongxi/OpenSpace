@@ -7,6 +7,10 @@
     "lib": "lib"
   },
   "scripts": {
+    "df": "forge verify-contract 0x2EA7D6f1b6Df8Ca3829DD41A6f30c848F2D47CBC src/the-graph/MYNFTGraph.sol:OSGraphNFT  --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231",
+    "nftMarket:publish": "forge script script/NFTMarketGraphV1.s.sol:NFTMarketGraphV1Script --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231 --private-key b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840 --broadcast --verify -vvvv",
+    "osGraphNFT:publish": "forge script script/NFTMarketGraphV1.s.sol:OSGraphNFTScript --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231 --private-key b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840 --broadcast --verify -vvvv",
+    "myGraphToken:publish": "forge script script/NFTMarketGraphV1.s.sol:MyGraphTokenScript --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231 --private-key b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840 --broadcast --verify -vvvv",
     "permit2:publish": "forge script script/MyPermit2.s.sol:MyPermit2Script --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231 --private-key b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840",
     "bank:publish": "forge script script/BigBank.s.sol:BigBankScript --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231 --private-key b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840",
     "admin:publish": "forge script script/Admin.s.sol:AdminScript --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231 --private-key b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840",
