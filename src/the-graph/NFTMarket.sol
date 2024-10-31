@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.26;
 
-// 0x4042b58b2bB3d1cf69a5e07816a142fdB6Ef74C9
-// https://sepolia.etherscan.io/tx/0xae61ec9c5d0d8dddd4ef0dc161fc3e96e42b3c9301b9d4fa6a82dfa035a1a8d9
+// 0xBCBD610f2E4aeaF7265c2fcaa0dd7425fc4b253F
+// https://sepolia.etherscan.io/tx/0xd804c3b7476f345817f1c48726919484221a5fc234a326e6cd3b87540ca9bcbe
 import {SafeERC20} from "oz_v5/contracts/token/ERC20/utils/SafeERC20.sol";
 import {Ownable} from "oz_v5/contracts/access/Ownable.sol";
 import {EIP712} from "oz_v5/contracts/utils/cryptography/EIP712.sol";
@@ -10,7 +10,7 @@ import {ECDSA} from "oz_v5/contracts/utils/cryptography/ECDSA.sol";
 import {IERC20} from "oz_v5/contracts/token/ERC20/IERC20.sol";
 import {IERC721} from "oz_v5/contracts/token/ERC721/IERC721.sol";
 
-contract NFTMarket is Ownable(msg.sender), EIP712("OpenSpaceNFTMarket", "1") {
+contract NFTMarketGraphV1 is Ownable(msg.sender), EIP712("OpenSpaceNFTMarket", "1") {
     address public constant ETH_FLAG = address(0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE);
     uint256 public constant feeBP = 30; // 30/10000 = 0.3%
     address public whiteListSigner;
