@@ -10,6 +10,9 @@ import {ECDSA} from "oz_v5/contracts/utils/cryptography/ECDSA.sol";
 import {IERC20} from "oz_v5/contracts/token/ERC20/IERC20.sol";
 import {IERC721} from "oz_v5/contracts/token/ERC721/IERC721.sol";
 
+// https://api-sepolia.etherscan.io/api?module=contract&action=getabi&address=0xBCBD610f2E4aeaF7265c2fcaa0dd7425fc4b253F&apikey=3UXHWT8TG5GRJVEE5TV57T4V487EC6EYXG
+// fetch('https://sepolia.abi.pinax.network/api?module=contract&action=getabi&address=0xBCBD610f2E4aeaF7265c2fcaa0dd7425fc4b253F').then(res => res.json()).then(console.log)
+
 contract NFTMarketGraphV1 is Ownable(msg.sender), EIP712("OpenSpaceNFTMarket", "1") {
     address public constant ETH_FLAG = address(0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE);
     uint256 public constant feeBP = 30; // 30/10000 = 0.3%
