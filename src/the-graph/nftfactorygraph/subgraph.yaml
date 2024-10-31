@@ -19,6 +19,7 @@ dataSources:
         - NFTCreated
         - NFTRegesitered
         - OwnershipTransferred
+        - TokenInfo
       abis:
         - name: nftfactorygraph
           file: ./abis/nftfactorygraph.json
@@ -29,4 +30,25 @@ dataSources:
           handler: handleNFTRegesitered
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
+        - event: NFTCreated(address)
+          handler: handleNFTCreatedByNFTCA
       file: ./src/nftfactorygraph.ts
+templates:
+  - kind: ethereum/contract
+    name: NFTContract
+    network: sepolia
+    source:
+      abi: nft
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - TokenInfo
+      abis:
+        - name: nft
+          file: ./abis/nft.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/nftcontract.ts

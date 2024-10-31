@@ -22,3 +22,15 @@ type OwnershipTransferred @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+
+type TokenInfo @entity {
+  id: ID!
+  ca: Bytes! # NFT 合约地址
+  tokenId: BigInt! # token ID
+  tokenURL: String!
+  name: String!
+  owner: Bytes! # 当前拥有者地址
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
