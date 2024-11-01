@@ -3,6 +3,7 @@ indexerHints:
   prune: auto
 schema:
   file: ./schema.graphql
+# 这里定义数据源 需要具体的合约地址 从固定地址获取数据
 dataSources:
   - kind: ethereum
     name: nftfactorygraph
@@ -31,6 +32,7 @@ dataSources:
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
       file: ./src/nftfactorygraph.ts
+# 定义实例 是数据源的具体化对象 
 templates:
   - kind: ethereum/contract
     name: NFTContract
