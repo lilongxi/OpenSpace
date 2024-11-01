@@ -30,8 +30,6 @@ dataSources:
           handler: handleNFTRegesitered
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
-        - event: NFTCreated(address)
-          handler: handleNFTCreatedByNFTCA
       file: ./src/nftfactorygraph.ts
 templates:
   - kind: ethereum/contract
