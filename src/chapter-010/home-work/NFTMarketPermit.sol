@@ -6,8 +6,12 @@ import "forge-std/console.sol";
 import "oz_v5/contracts/utils/Context.sol";
 import "oz_v5/contracts/utils/ReentrancyGuard.sol";
 import "../../chapter-006/NFTMarket/NFTMarket.sol";
+import "./EIP712Helper.sol";
 
 contract NFTMarketPermit is NFTMarket, ReentrancyGuard {
+    
+    using EIP712Helper for bytes32;
+
     mapping (address => bool) public whitelisted;
     mapping (address => uint256) public nonces;
 
@@ -41,6 +45,8 @@ contract NFTMarketPermit is NFTMarket, ReentrancyGuard {
     // 验证是否在截止日期内
     require(block.timestamp <= deadline, "Signature expired");
 
+    nonces[buyer]++;
+
     buyNFT(tokenId);
 
   }
@@ -67,7 +73,7 @@ contract NFTMarketPermit is NFTMarket, ReentrancyGuard {
         
     );
 
-    bytes32 digest = _hashTypedDataV4(structHash);
+    bytes32 digest = EIP712Helper.hashTypedDataV4(structHash);
      // 验证签名
     address signer = ecrecover(digest, v, r, s);
     require(signer == _msgSender(), "Invalid signature");
@@ -80,25 +86,5 @@ contract NFTMarketPermit is NFTMarket, ReentrancyGuard {
     buyNFT(tokenId);
 
   }
-
-     // 内部函数：生成EIP-712类型的哈希
-    function _hashTypedDataV4(bytes32 structHash) internal view returns (bytes32) {
-        return keccak256(abi.encodePacked(
-            "\x19\x01",
-            _domainSeparatorV4(),
-            structHash
-        ));
-    }
-
-     // 内部函数：返回域分隔符
-    function _domainSeparatorV4() internal view returns (bytes32) {
-        return keccak256(abi.encode(
-            keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
-            keccak256(bytes(NAME)),
-            keccak256(bytes(VERSION)),
-            block.chainid,
-            address(this)
-        ));
-    }
 
 }
