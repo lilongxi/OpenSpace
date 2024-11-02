@@ -22,4 +22,17 @@ library  EIP712Helper {
             address(this)
         ));
     }
+
+    function parseSignature(bytes memory signature) public pure returns (uint8 v, bytes32 r, bytes32 s) {
+        require(signature.length == 65, "Invalid signature length");
+
+        assembly {
+            r := mload(add(signature, 0x20))
+            s := mload(add(signature, 0x40))
+            v := byte(0, mload(add(signature, 0x60)))
+        }
+
+        require(uint256(s) <= 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, "Invalid 's' value");
+        require(v == 27 || v == 28, "Invalid 'v' value");
+    }
 }

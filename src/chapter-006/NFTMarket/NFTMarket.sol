@@ -53,7 +53,7 @@ contract NFTMarketEvent {
     }
 
     // NFT持有者上架NFT，设置价格
-    function list(uint tokenId, uint price) external {
+    function list(uint tokenId, uint price) public virtual returns(bool, Listing memory) {
         address owner = _msgSender();
         require(nftContract.ownerOf(tokenId) == owner, "You are not the owner of this NFT");
         require(price > 0, "Price must be greater than zero");
@@ -65,6 +65,8 @@ contract NFTMarketEvent {
         listings[tokenId] = Listing(tokenId, owner, price, false);
         
         emit NFTListed(tokenId, price, owner); 
+
+        return (true, listings[tokenId]);
     }
 
     function tokensReceived(address from, uint256 amount, bytes calldata data) external returns (bool) {
@@ -84,7 +86,7 @@ contract NFTMarketEvent {
         return true;
     }
 
-    function buyNFT (uint tokenId) public {
+    function buyNFT (uint tokenId) public virtual {
         Listing memory listing = listings[tokenId];
         address owner = _msgSender();
         

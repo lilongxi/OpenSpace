@@ -87,4 +87,8 @@ contract NFTMarketPermit is NFTMarket, ReentrancyGuard {
 
   }
 
+  function list(uint tokenId, uint price) public virtual override returns(bool, Listing memory) {
+    return super.list(tokenId, price);
+  }
+
 }

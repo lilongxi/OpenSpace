@@ -40,6 +40,7 @@ contract TokenBank {
     ) public {
          // 调用 permit 方法
         permitToken.permit(owner, spender, amount, deadline, v, r, s);
+        // _approve();
         // 执行存款
         deposit(owner, amount);
     }
