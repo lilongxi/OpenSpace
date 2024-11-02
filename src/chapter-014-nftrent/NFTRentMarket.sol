@@ -16,12 +16,41 @@ contract NFTRentMarket is NFTMarketPermit {
         uint256 deadline;
     }
 
+    function createSaleSignature(
+        uint256 tokenId,
+        uint256 price,
+        uint256 deadline
+    ) public view returns (bytes32) {
+        address seller = _msgSender();
+        uint256 nonce = nonces[seller];
+        Sale memory sale = Sale({
+            seller: seller,
+            tokenId: tokenId,
+            price: price,
+            nonce: nonce,
+            deadline: deadline
+        });
+        bytes32 structHash = keccak256(
+            abi.encode(
+                keccak256("Sale(address seller,uint256 tokenId,uint256 price,uint256 nonce,uint256 deadline)"),
+                sale.seller,
+                sale.tokenId,
+                sale.price,
+                sale.nonce,
+                sale.deadline
+            )
+        );
+        return EIP712Helper.hashTypedDataV4(structHash); 
+    }
+
+    // 购买方法
     function buyWithPermit(Sale memory sale, uint8 v, bytes32 r, bytes32 s) public payable nonReentrant {
         // address buyer = _msgSender();
         require(nonces[sale.seller] == sale.nonce, "Invalid nonce"); // 验证nonce
         require(block.timestamp <= sale.deadline, "Sale expired");
         require(msg.value >= sale.price, "Insufficient funds");
 
+        // 验证离线签名
         bytes32 structHash = keccak256(
             abi.encode(
                 keccak256("Sale(address seller,uint256 tokenId,uint256 price,uint256 nonce,uint256 deadline)"),

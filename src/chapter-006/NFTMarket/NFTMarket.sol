@@ -64,7 +64,7 @@ contract NFTMarketEvent {
         // nftContract.setApprovalForAll(address(this), true);
         listings[tokenId] = Listing(tokenId, owner, price, false);
         
-         emit NFTListed(tokenId, price, owner); 
+        emit NFTListed(tokenId, price, owner); 
     }
 
     function tokensReceived(address from, uint256 amount, bytes calldata data) external returns (bool) {
