@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.26;
 
-import "../chapter-010/home-work/NFTMarketPermit.sol";
+import { NFTMarketPermit } from "../chapter-010/home-work/NFTMarketPermit.sol";
 import "../chapter-010/home-work/EIP712Helper.sol";
 
-contract NFTRentMarket is NFTMarketPermit {
+contract NFTMarket is NFTMarketPermit {
     using EIP712Helper for bytes32;
     constructor(address _nftAddr, address _tokenAddr) NFTMarketPermit(_nftAddr, _tokenAddr) {}
 
