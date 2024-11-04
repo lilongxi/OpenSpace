@@ -38,6 +38,7 @@ contract NFTMarketNoListingsTest is Test, NFTMarketNoListingsEvents {
     }
 
     function testListNFT() public {
+        
         uint256 tokenId = 1; // 使用铸造的 tokenId
         uint256 price = 100;
         string memory ipfsHash = "QmExampleIpfsHash";
@@ -60,15 +61,15 @@ contract NFTMarketNoListingsTest is Test, NFTMarketNoListingsEvents {
         bytes32 listingId = keccak256(abi.encodePacked(address(nft), tokenId, seller, block.timestamp));
 
         // // 开始上架 NFT
-        vm.startPrank(seller); // 切换到卖家的账户
+        vm.prank(seller); // 切换到卖家的账户
+        vm.expectEmit(true, true, true, true);
+        emit NFTListed(address(nft), tokenId, seller, price, listingId, ipfsHash); // 已经修改为符合事件定义的格式
         market.listNFT(address(nft), tokenId, price, ipfsHash, v, r, s);
-        // console.log('====', listingId); // 已经移除
-        // vm.expectEmit(true, true, true, true); // 已经移除
-        emit NFTListedV2(tokenId, price, seller); // 已经修改为符合事件定义的格式
-        vm.stopPrank();
+        // vm.stopPrank();
 
         // 验证上架事件是否触发
         // 在这里可以根据需要添加断言，检查事件是否被正确触发等
+
     }
 
     function _generateListingSignature(

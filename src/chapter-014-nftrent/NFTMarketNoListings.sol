@@ -8,6 +8,7 @@ import "oz_v5/contracts/access/Ownable.sol";
 import "oz_v5/contracts/utils/cryptography/EIP712.sol";
 import "oz_v5/contracts/utils/cryptography/ECDSA.sol";
 import "oz_v5/contracts/utils/ReentrancyGuard.sol";
+import "oz_v5/contracts/token/ERC721/IERC721Receiver.sol";
 
 
 contract NFTMarketNoListingsEvents {
@@ -30,7 +31,7 @@ contract NFTMarketNoListingsEvents {
 }
 
 
-contract NFTMarketNoListings is EIP712, Ownable, ReentrancyGuard, NFTMarketNoListingsEvents {
+contract NFTMarketNoListings is EIP712, Ownable, ReentrancyGuard, IERC721Receiver, NFTMarketNoListingsEvents {
     using ECDSA for bytes32;
 
     mapping(bytes32 => bool) public usedSignatures;
@@ -125,5 +126,13 @@ contract NFTMarketNoListings is EIP712, Ownable, ReentrancyGuard, NFTMarketNoLis
 
     function hashTypedDataV4(bytes32 structHash) public view returns (bytes32) {
         return _hashTypedDataV4(structHash);
+    }
+
+     //  要求实现避免锁死
+    function onERC721Received(address operator,
+        address from,
+        uint256 tokenId,
+        bytes calldata data) external override returns (bytes4) {
+            return this.onERC721Received.selector;
     }
 }
