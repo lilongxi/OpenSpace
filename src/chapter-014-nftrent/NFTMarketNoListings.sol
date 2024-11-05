@@ -10,7 +10,6 @@ import "oz_v5/contracts/utils/cryptography/ECDSA.sol";
 import "oz_v5/contracts/utils/ReentrancyGuard.sol";
 import "oz_v5/contracts/token/ERC721/IERC721Receiver.sol";
 
-
 contract NFTMarketNoListingsEvents {
     event NFTListed(
         address indexed nftContract,
