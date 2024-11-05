@@ -63,7 +63,7 @@ contract IDO is ReentrancyGuard, Ownable {
 
     // 购买代币：用户在预售期间可以通过 buyTokens 函数支付 ETH 购买 Token，Token 数量按指定的价格计算
     // payable 隐式接收 ETH
-    function buyTokens() public payable virtual onlyWhileOpen nonReentrant {
+    function buyTokens() public payable onlyWhileOpen nonReentrant {
         require(msg.value > 0, "Cannot purchase with zero ETH");
         uint256 tokenAmount = (msg.value * 1e18) / price; // Calculate tokens based on ETH contributed
         require(totalRaised + msg.value <= cap, "Purchase exceeds cap");
