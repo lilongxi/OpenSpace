@@ -17,7 +17,7 @@
     "myToken:publish": "forge script script/MyToken.s.sol:MyTokenScript --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231 --private-key b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840",
     "tokenBank:publish": "forge script script/TokenBank.s.sol:TokenBankScript --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231 --private-key b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840",
     "myNFT:create": "forge create MyNFTLLX --rpc-url https://sepolia.infura.io/v3/5960cd4ada0f4e5cad9a0fb398d2c231 --private-key b98700fc90ae944111b6b16b774f45ab56db751d442bdc011add8412a1de6840",
-    "dev:011": "npx ts-node src/chapter-011-abi/Read100Usdc.ts"
+    "dev:011": "npx ts-node src/chapter-016-slot/readLockInfo.ts"
   },
   "keywords": [],
   "author": "",
