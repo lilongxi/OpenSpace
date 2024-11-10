@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/proxy/transparent/ProxyAdmin.sol";
 import "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol";
 
@@ -18,8 +19,9 @@ contract Counter {
     }
 }
 
-contract MyProxyAdmin is ProxyAdmin {
-   constructor(address initialOwner) ProxyAdmin(initialOwner) {}
+contract OwnableProxyAdmin is Ownable, ProxyAdmin {
+   constructor(address initialOwner) ProxyAdmin(initialOwner) {
+   }
 }
 
 contract MyTransparentUpgradeableProxy is TransparentUpgradeableProxy {
